@@ -1,0 +1,31 @@
+.view_container {
+    height: 100%;
+    width: 100%;
+}
+
+.rack {
+    height: 100%;
+    width: 100%;
+}
+
+td {
+    text-align: center;
+    border: white solid;
+    border-bottom: 0px;
+    width: 50px;
+}
+
+table,
+tr,
+td,
+th {
+    border-collapse: collapse;
+}
+
+.cell {
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #4A4A4A;
+}
