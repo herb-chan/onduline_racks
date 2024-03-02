@@ -27,12 +27,8 @@
     background-color: #f3b255;
 }
 
-.wprowadź_indicator_active {
-    background-color: #49b872;
-}
-
-.usuń_indicator_active {
-    background-color: #e16369;
+.wyszukaj_indicator_active {
+    background-color: #7887d9;
 }
 
 .indicator_inactive {
@@ -43,12 +39,8 @@
     color: #f3b255;
 }
 
-.wprowadź_active {
-    color: #49b872;
-}
-
-.usuń_active {
-    color: #e16369;
+.wyszukaj_active {
+    color: #7887d9;
 }
 
 .text_inactive {

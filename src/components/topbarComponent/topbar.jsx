@@ -6,10 +6,8 @@ export default function TopBar({ activeButton }) {
 
         if (activeButton === 'Wyświetl') {
             actionName = `wyświetlasz`;
-        } else if (activeButton === 'Wprowadź') {
-            actionName = `wprowadzasz`;
-        } else {
-            actionName = `usuwasz`;
+        } else if (activeButton === 'Wyszukaj') {
+            actionName = 'wyszukujesz';
         }
 
         return actionName;
@@ -20,10 +18,8 @@ export default function TopBar({ activeButton }) {
 
         if (activeButton === 'Wyświetl') {
             className = `${styles.wyświetl}`;
-        } else if (activeButton === 'Wprowadź') {
-            className = `${styles.wprowadź}`;
-        } else {
-            className = `${styles.usuń}`;
+        } else if (activeButton === 'Wyszukaj') {
+            className = `${styles.wyszukaj}`;
         }
 
         return className;
