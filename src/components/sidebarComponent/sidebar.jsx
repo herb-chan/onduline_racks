@@ -2,11 +2,25 @@ import styles from './sidebar.module.css';
 import Logo from '../logoComponent/logo';
 import Options from '../optionsComponent/options';
 
-export default function SideBar({ activeButton, setActiveButton }) {
+export default function SideBar({
+    activeButton,
+    setActiveButton,
+    setCommunicate,
+    setProductIndeks,
+    setProductNR,
+    setProductEAN,
+}) {
     return (
         <div className={`${styles.sidebar_container}`}>
             <Logo />
-            <Options activeButton={activeButton} setActiveButton={setActiveButton} />
+            <Options
+                activeButton={activeButton}
+                setActiveButton={setActiveButton}
+                setCommunicate={setCommunicate}
+                setProductIndeks={setProductIndeks}
+                setProductNR={setProductNR}
+                setProductEAN={setProductEAN}
+            />
         </div>
     );
 }

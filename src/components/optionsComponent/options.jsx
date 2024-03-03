@@ -2,9 +2,22 @@ import styles from './options.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBox, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-export default function Options({ activeButton, setActiveButton }) {
+export default function Options({
+    activeButton,
+    setActiveButton,
+    setCommunicate,
+    setProductIndeks,
+    setProductNR,
+    setProductEAN,
+}) {
     const onButtonClick = (buttonTitle) => {
         setActiveButton(buttonTitle);
+        if (buttonTitle !== 'Wyszukaj') {
+            setCommunicate('');
+            setProductIndeks('');
+            setProductNR('');
+            setProductEAN('');
+        }
     };
 
     const getWyświetlIndicatorClassName = () => {

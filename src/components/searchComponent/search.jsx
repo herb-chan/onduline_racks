@@ -13,9 +13,11 @@ export default function SearchAction({
     searchingProduct,
     setSearchingProduct,
     searchResult,
+    setSearchResult,
+    communicate,
+    setCommunicate,
 }) {
     const [selectedSearchMethod, setSelectedSearchMethod] = useState('indeks');
-    const [communicate, setCommunicate] = useState('');
 
     const handleIndeksInputChange = (e) => {
         setProductIndeks(e.target.value);
@@ -38,7 +40,12 @@ export default function SearchAction({
     };
 
     const handleSearchingIndeks = () => {
-        if (selectedSearchMethod === 'indeks' && productIndeks !== '' && searchResult === '') {
+        if (
+            selectedSearchMethod === 'indeks' &&
+            productIndeks !== '' &&
+            searchResult === '' &&
+            productIndeks.length == 8
+        ) {
             setSearchingProduct(productIndeks);
         } else if (selectedSearchMethod === 'indeks' && productIndeks === '') {
             setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
@@ -54,6 +61,9 @@ export default function SearchAction({
             searchResult === 'no_product_on_shelves'
         ) {
             setCommunicate(`Produkt "${productIndeks}" nie znajduje się na regałach wysokiego składowania.`);
+        } else if (selectedSearchMethod === 'indeks' && productIndeks !== '' && productIndeks.length != 8) {
+            setCommunicate(`Błąd: Wprowadzony kod INDEKS jest krótszy niż wymagane 8 znaków.`);
+            setSearchResult('search_is_too_short');
         } else {
             setCommunicate(`Błąd: nie można wyszukać produktu "${productIndeks}".`);
         }
@@ -74,7 +84,7 @@ export default function SearchAction({
     };
 
     const handleSearchingEAN = () => {
-        if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === '') {
+        if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === '' && productEAN.length == 13) {
             setSearchingProduct(productEAN);
         } else if (selectedSearchMethod === 'ean' && productEAN === '') {
             setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
@@ -82,6 +92,8 @@ export default function SearchAction({
             setCommunicate(`Błąd: Produkt "${productEAN}" nie został znaleziony w bazie.`);
         } else if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === 'no_product_on_shelves') {
             setCommunicate(`Produkt "${productEAN}" nie znajduje się na regałach wysokiego składowania.`);
+        } else if (selectedSearchMethod === 'ean' && productEAN !== '' && productEAN.length != 13) {
+            setCommunicate(`Błąd: Wprowadzony kod EAN jest krótszy niż wymagane 13 znaków.`);
         } else {
             setCommunicate(`Błąd: nie można wyszukać produktu "${productEAN}".`);
         }
@@ -157,7 +169,7 @@ export default function SearchAction({
                 <h3 className={`${searchResult}`}>{communicate}</h3>
             </div>
             <div className={`${styles.display_container} ${selectedSearchMethod === 'ean' ? styles.display_ean : ''}`}>
-                <h1>Wyszukiwanie za kodu EAN13:</h1>{' '}
+                <h1>Wyszukiwanie za pomocą kodu EAN13:</h1>{' '}
                 <div className={`${styles.search_bar_container}`}>
                     <div
                         className={`${styles.icon_container} ${productEAN !== '' ? styles.icon_active : ''}`}

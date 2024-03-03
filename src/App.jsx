@@ -11,11 +11,19 @@ function App() {
     const [productNR, setProductNR] = useState('');
     const [productEAN, setProductEAN] = useState('');
     const [searchingProduct, setSearchingProduct] = useState('');
-    const [searchResult, setSearchResult] = useState('no_product_in_database');
+    const [searchResult, setSearchResult] = useState('');
+    const [communicate, setCommunicate] = useState('');
 
     return (
         <div className="App">
-            <SideBar activeButton={activeButton} setActiveButton={setActiveButton} />
+            <SideBar
+                activeButton={activeButton}
+                setActiveButton={setActiveButton}
+                setCommunicate={setCommunicate}
+                setProductIndeks={setProductIndeks}
+                setProductNR={setProductNR}
+                setProductEAN={setProductEAN}
+            />
             <div className="top_action">
                 <TopBar activeButton={activeButton} />
                 {activeButton === 'Wyświetl' ? (
@@ -31,6 +39,9 @@ function App() {
                         searchingProduct={searchingProduct}
                         setSearchingProduct={setSearchingProduct}
                         searchResult={searchResult}
+                        setSearchResult={setSearchResult}
+                        communicate={communicate}
+                        setCommunicate={setCommunicate}
                     />
                 )}
             </div>
