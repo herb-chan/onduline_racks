@@ -1,11 +1,13 @@
 import styles from './logo.module.css';
-import logo from './racks_logo.png';
+import racksLogo from './racks_logo.png';
+import ondulineLogo from './onduline_logo.png';
 
 export default function Logo() {
     return (
         <div className={`${styles.logo_container}`}>
-            <img src={logo} alt="application logo" />
-            <h1>Onduline</h1>
+            <img src={racksLogo} alt="application logo" className={styles.racks_logo} />
+            {/* <h1>Onduline</h1> */}
+            <img src={ondulineLogo} alt="application logo" className={styles.onduline_logo} />
         </div>
     );
 }

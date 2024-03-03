@@ -1,0 +1,28 @@
+.search_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1E1E1E;
+}
+
+.rack {
+    height: 100%;
+    width: 100%;
+}
+
+td {
+    text-align: center;
+    border: white solid;
+    border-bottom: 0px;
+    width: 50px;
+}
+
+table,
+tr,
+td,
+th {
+    border-collapse: collapse;
+}

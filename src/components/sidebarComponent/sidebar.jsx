@@ -9,6 +9,7 @@ export default function SideBar({
     setProductIndeks,
     setProductNR,
     setProductEAN,
+    setSearchingProduct,
 }) {
     return (
         <div className={`${styles.sidebar_container}`}>
@@ -20,6 +21,7 @@ export default function SideBar({
                 setProductIndeks={setProductIndeks}
                 setProductNR={setProductNR}
                 setProductEAN={setProductEAN}
+                setSearchingProduct={setSearchingProduct}
             />
         </div>
     );

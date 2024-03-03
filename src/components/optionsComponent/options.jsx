@@ -9,6 +9,7 @@ export default function Options({
     setProductIndeks,
     setProductNR,
     setProductEAN,
+    setSearchingProduct,
 }) {
     const onButtonClick = (buttonTitle) => {
         setActiveButton(buttonTitle);
@@ -17,6 +18,7 @@ export default function Options({
             setProductIndeks('');
             setProductNR('');
             setProductEAN('');
+            setSearchingProduct('');
         }
     };
 

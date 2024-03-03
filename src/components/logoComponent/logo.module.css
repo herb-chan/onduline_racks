@@ -5,9 +5,16 @@
     justify-content: center;
     margin-top: 40px;
     gap: 10px;
+    color: red;
 }
 
-img {
+.racks_logo {
     height: 80px;
     width: 80px;
+}
+
+.onduline_logo {
+    height: 30px;
+    width: 160px;
+    filter: brightness(0) invert(1);
 }

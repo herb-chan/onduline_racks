@@ -23,6 +23,7 @@ function App() {
                 setProductIndeks={setProductIndeks}
                 setProductNR={setProductNR}
                 setProductEAN={setProductEAN}
+                setSearchingProduct={setSearchingProduct}
             />
             <div className="top_action">
                 <TopBar activeButton={activeButton} />
