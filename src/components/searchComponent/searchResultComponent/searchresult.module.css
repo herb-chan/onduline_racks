@@ -17,7 +17,6 @@ td {
     text-align: center;
     border: white solid;
     border-bottom: 0px;
-    width: 50px;
 }
 
 table,
@@ -25,4 +24,49 @@ tr,
 td,
 th {
     border-collapse: collapse;
+}
+
+.cell_inner {
+    width: 119px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cell_symbol {
+    width: 100%;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.cell_info {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+span {
+    margin: 0;
+    padding: 0;
+}
+
+.blank {
+    color: #fff;
+}
+
+.oldest {
+    color: #e16369;
+}
+
+.when_both {
+    display: flex;
+    flex-direction: column;
+}
+
+.cell_with_product {
+    cursor: pointer;
 }

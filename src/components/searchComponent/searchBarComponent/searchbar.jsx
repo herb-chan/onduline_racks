@@ -65,9 +65,9 @@ export default function SearchBar({
                         console.log('Searching for:', productIndeks);
 
                         if (result.length > 0) {
-                            const indeksList = result.map((item) => item.cell);
-                            console.log('Indeks list:', indeksList);
-                            setSearchingProduct(indeksList);
+                            const productList = result.map((item) => item);
+                            console.log('Product list:', productList);
+                            setSearchingProduct(productList);
                         } else {
                             // No product found on the rack
                             setCommunicate(

@@ -1,6 +1,11 @@
 .view_container {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1E1E1E;
 }
 
 .rack {
@@ -12,7 +17,6 @@ td {
     text-align: center;
     border: white solid;
     border-bottom: 0px;
-    width: 50px;
 }
 
 table,
@@ -28,4 +32,22 @@ th {
 
 .cell:hover {
     background-color: #4A4A4A;
+}
+
+.cell_inner {
+    width: 119px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cell_symbol {
+    width: 100%;
+    height: min-content;
+}
+
+.cell_info {
+    width: 100%;
+    height: 140px;
 }
