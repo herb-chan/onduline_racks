@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './search.module.css';
 import SearchBar from './searchBarComponent/searchbar';
 import SearchResult from './searchResultComponent/searchresult';
+import SearchCell from './searchCellComponent/searchCell';
 
 export default function SearchAction({
     productIndeks,
@@ -18,10 +19,11 @@ export default function SearchAction({
     setCommunicate,
 }) {
     const [selectedSearchMethod, setSelectedSearchMethod] = useState('indeks');
+    const [cellInfo, setCellInfo] = useState('');
 
     return (
         <>
-            {searchingProduct === '' ? (
+            {searchingProduct === '' && !cellInfo ? (
                 <SearchBar
                     productIndeks={productIndeks}
                     setProductIndeks={setProductIndeks}
@@ -38,9 +40,11 @@ export default function SearchAction({
                     selectedSearchMethod={selectedSearchMethod}
                     setSelectedSearchMethod={setSelectedSearchMethod}
                 />
-            ) : (
-                <SearchResult searchingProduct={searchingProduct} />
-            )}
+            ) : null}
+            {searchingProduct !== '' && !cellInfo ? (
+                <SearchResult searchingProduct={searchingProduct} setCellInfo={setCellInfo} />
+            ) : null}
+            {cellInfo ? <SearchCell /> : null}
         </>
     );
 }

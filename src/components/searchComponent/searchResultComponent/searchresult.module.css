@@ -70,3 +70,7 @@ span {
 .cell_with_product {
     cursor: pointer;
 }
+
+.cell_with_product:hover {
+    background-color: #4A4A4A;
+}

@@ -26,7 +26,7 @@ function App() {
                 setSearchingProduct={setSearchingProduct}
             />
             <div className="top_action">
-                <TopBar activeButton={activeButton} />
+                <TopBar activeButton={activeButton} searchingProduct={searchingProduct} />
                 {activeButton === 'Wyświetl' ? (
                     <ViewAction />
                 ) : (

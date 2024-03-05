@@ -94,7 +94,7 @@ export default function SearchBar({
             setCommunicate(`Błąd: Wprowadzony kod INDEKS jest krótszy niż wymagane 8 znaków.`);
             setSearchResult('search_is_too_short');
         } else {
-            setCommunicate(`Błąd: Nie można wyszukać produktu "${productIndeks}".`);
+            setCommunicate(`Wyszukiwanie produktu "${productIndeks}" może zająć krótką chwilę...`);
         }
     };
 

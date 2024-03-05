@@ -1,7 +1,7 @@
 import styles from './searchresult.module.css';
 import { useState, useEffect } from 'react';
 
-export default function SearchResult({ searchingProduct }) {
+export default function SearchResult({ searchingProduct, setCellInfo }) {
     const [cellColors, setCellColors] = useState({});
     const [cellCounts, setCellCounts] = useState({});
     const [oldestCell, setOldestCell] = useState('');
@@ -9,6 +9,7 @@ export default function SearchResult({ searchingProduct }) {
 
     const onCellWithProductClick = async (symbol) => {
         console.log(symbol);
+        setCellInfo(symbol);
     };
 
     useEffect(() => {
