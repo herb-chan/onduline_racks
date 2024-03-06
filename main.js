@@ -53,6 +53,23 @@ async function searchByIndeksOnRack(productIndeks) {
     }
 }
 
+async function searchByCell(cellSymbol, productIndeks) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+
+        const query = { cell: cellSymbol, indeks: productIndeks };
+        const result = await client.db('Onduline').collection('Rack').find(query).toArray();
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -88,4 +105,8 @@ ipcMain.handle('searchByIndeks', async (event, productIndeks) => {
 
 ipcMain.handle('searchByIndeksOnRack', async (event, productIndeks) => {
     return await searchByIndeksOnRack(productIndeks);
+});
+
+ipcMain.handle('searchByCell', async (event, cellSymbol, productIndeks) => {
+    return await searchByCell(cellSymbol, productIndeks);
 });

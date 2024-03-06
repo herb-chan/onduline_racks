@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styles from './search.module.css';
 import SearchBar from './searchBarComponent/searchbar';
 import SearchResult from './searchResultComponent/searchresult';
 import SearchCell from './searchCellComponent/searchCell';
@@ -17,9 +16,12 @@ export default function SearchAction({
     setSearchResult,
     communicate,
     setCommunicate,
+    cellInfo,
+    setCellInfo,
+    productsOnShelf,
+    setProductOnShelf,
 }) {
     const [selectedSearchMethod, setSelectedSearchMethod] = useState('indeks');
-    const [cellInfo, setCellInfo] = useState('');
 
     return (
         <>
@@ -42,9 +44,13 @@ export default function SearchAction({
                 />
             ) : null}
             {searchingProduct !== '' && !cellInfo ? (
-                <SearchResult searchingProduct={searchingProduct} setCellInfo={setCellInfo} />
+                <SearchResult
+                    searchingProduct={searchingProduct}
+                    setCellInfo={setCellInfo}
+                    setProductOnShelf={setProductOnShelf}
+                />
             ) : null}
-            {cellInfo ? <SearchCell /> : null}
+            {cellInfo && productsOnShelf ? <SearchCell cellInfo={cellInfo} productsOnShelf={productsOnShelf} /> : null}
         </>
     );
 }

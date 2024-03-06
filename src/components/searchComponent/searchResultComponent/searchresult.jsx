@@ -1,15 +1,20 @@
 import styles from './searchresult.module.css';
 import { useState, useEffect } from 'react';
+const { ipcRenderer } = window.require('electron');
 
-export default function SearchResult({ searchingProduct, setCellInfo }) {
+export default function SearchResult({ searchingProduct, setCellInfo, setProductOnShelf }) {
     const [cellColors, setCellColors] = useState({});
     const [cellCounts, setCellCounts] = useState({});
     const [oldestCell, setOldestCell] = useState('');
     const [recentCell, setRecentCell] = useState('');
 
-    const onCellWithProductClick = async (symbol) => {
+    const onCellWithProductClick = async (symbol, productIndeks) => {
         console.log(symbol);
+        console.log(productIndeks);
+        const result = await ipcRenderer.invoke('searchByCell', symbol, productIndeks);
         setCellInfo(symbol);
+        setProductOnShelf(result);
+        console.log('Search result:', result, typeof result);
     };
 
     useEffect(() => {
@@ -68,7 +73,11 @@ export default function SearchResult({ searchingProduct, setCellInfo }) {
                                 <td
                                     key={col}
                                     className={`${styles.cell} ${hasProduct ? styles.cell_with_product : ''}`}
-                                    onClick={hasProduct ? () => onCellWithProductClick(cellSymbol) : undefined}>
+                                    onClick={
+                                        hasProduct
+                                            ? () => onCellWithProductClick(cellSymbol, searchingProduct[0]['indeks'])
+                                            : undefined
+                                    }>
                                     <div className={styles.cell_inner}>
                                         <div
                                             className={styles.cell_symbol}

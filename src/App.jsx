@@ -13,6 +13,8 @@ function App() {
     const [searchingProduct, setSearchingProduct] = useState('');
     const [searchResult, setSearchResult] = useState('');
     const [communicate, setCommunicate] = useState('');
+    const [cellInfo, setCellInfo] = useState('');
+    const [productsOnShelf, setProductOnShelf] = useState('');
 
     return (
         <div className="App">
@@ -24,9 +26,10 @@ function App() {
                 setProductNR={setProductNR}
                 setProductEAN={setProductEAN}
                 setSearchingProduct={setSearchingProduct}
+                setCellInfo={setCellInfo}
             />
             <div className="top_action">
-                <TopBar activeButton={activeButton} searchingProduct={searchingProduct} />
+                <TopBar activeButton={activeButton} searchingProduct={searchingProduct} cellInfo={cellInfo} />
                 {activeButton === 'Wyświetl' ? (
                     <ViewAction />
                 ) : (
@@ -43,6 +46,10 @@ function App() {
                         setSearchResult={setSearchResult}
                         communicate={communicate}
                         setCommunicate={setCommunicate}
+                        cellInfo={cellInfo}
+                        setCellInfo={setCellInfo}
+                        productsOnShelf={productsOnShelf}
+                        setProductOnShelf={setProductOnShelf}
                     />
                 )}
             </div>

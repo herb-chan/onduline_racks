@@ -10,6 +10,7 @@ export default function Options({
     setProductNR,
     setProductEAN,
     setSearchingProduct,
+    setCellInfo,
 }) {
     const onButtonClick = (buttonTitle) => {
         setActiveButton(buttonTitle);
@@ -19,6 +20,7 @@ export default function Options({
             setProductNR('');
             setProductEAN('');
             setSearchingProduct('');
+            setCellInfo('');
         }
     };
 
