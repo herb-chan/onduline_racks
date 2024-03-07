@@ -19,19 +19,20 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
 
     useEffect(() => {
         if (searchingProduct.length === 0) {
-            return; // Brak produktów do przetworzenia
+            return; // No products to process
         }
 
-        // Znajdź najstarszą i najnowszą datę
-        let oldestDate = searchingProduct[0].date;
-        let mostRecentDate = searchingProduct[0].date;
+        // Find oldest and most recent dates
+        let oldestDate = new Date(searchingProduct[0].date);
+        let mostRecentDate = new Date(searchingProduct[0].date);
 
         searchingProduct.forEach((product) => {
-            if (product.date < oldestDate) {
-                oldestDate = product.date;
+            const productDate = new Date(product.date);
+            if (productDate < oldestDate) {
+                oldestDate = productDate;
             }
-            if (product.date > mostRecentDate) {
-                mostRecentDate = product.date;
+            if (productDate > mostRecentDate) {
+                mostRecentDate = productDate;
             }
         });
 
@@ -39,21 +40,18 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
         const updatedCellCounts = {};
 
         searchingProduct.forEach((product) => {
-            let cell_symbol = product.cell;
+            const cell_symbol = product.cell;
             updatedCellCounts[cell_symbol] = (updatedCellCounts[cell_symbol] || 0) + 1;
 
-            if (product.date === oldestDate && product.date === mostRecentDate) {
-                updatedCellColors[cell_symbol] = '#e16369'; // Ustawiamy na czerwony kolor
-                setOldestCell(product.cell); // Ustawiamy najstarszy produkt
-                setRecentCell(''); // Czyścimy najnowszy produkt
-            } else if (product.date === oldestDate) {
-                updatedCellColors[cell_symbol] = '#e16369'; // Ustawiamy na czerwony kolor
-                setOldestCell(product.cell); // Ustawiamy najstarszy produkt
-            } else if (product.date === mostRecentDate) {
-                updatedCellColors[cell_symbol] = '#48b871'; // Ustawiamy na zielony kolor
-                setRecentCell(product.cell); // Ustawiamy najnowszy produkt
+            const productDate = new Date(product.date);
+            if (productDate.getTime() === oldestDate.getTime()) {
+                updatedCellColors[cell_symbol] = '#e16369'; // Set to red color
+                setOldestCell(product.cell); // Set oldest product
+            } else if (productDate.getTime() === mostRecentDate.getTime()) {
+                updatedCellColors[cell_symbol] = '#48b871'; // Set to green color
+                setRecentCell(product.cell); // Set most recent product
             } else {
-                updatedCellColors[cell_symbol] = '#f3b255'; // Domyślny kolor
+                updatedCellColors[cell_symbol] = '#48b871'; // Default color
             }
         });
 
@@ -91,8 +89,9 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
                                                 {recentCell === cellSymbol && oldestCell !== cellSymbol && 'Najnowszy'}
                                                 {recentCell === cellSymbol && oldestCell === cellSymbol && (
                                                     <span className={styles.when_both}>
-                                                        Najnowszy<span className={styles.blank}>oraz</span>
-                                                        <span className={styles.oldest}>najstarszy</span>
+                                                        <span className={styles.recent}>Najnowszy</span>
+                                                        <span className={styles.blank}>oraz</span>
+                                                        <span className={styles.oldest}>Najstarszy</span>
                                                     </span>
                                                 )}
                                             </span>

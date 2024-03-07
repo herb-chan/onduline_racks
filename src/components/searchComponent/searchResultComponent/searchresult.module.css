@@ -54,6 +54,10 @@ span {
     padding: 0;
 }
 
+.recent {
+    color: #48b871;
+}
+
 .blank {
     color: #fff;
 }

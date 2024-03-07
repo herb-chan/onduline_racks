@@ -2,8 +2,9 @@ import styles from './searchCell.module.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashCan, faClock, faHashtag, faQrcode, faTag, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+const { ipcRenderer } = window.require('electron');
 
-export default function SearchCell({ cellInfo, productsOnShelf }) {
+export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, setProductOnShelf, setSearchingProduct }) {
     // Initialize variables to store the oldest and youngest product
     let oldestProduct = null;
     let youngestProduct = null;
@@ -22,6 +23,35 @@ export default function SearchCell({ cellInfo, productsOnShelf }) {
             youngestProduct = product;
         }
     });
+
+    // Function to edit product on shelf
+    const editProductOnShelf = (product) => {
+        return;
+    };
+
+    const removeProductFromShelf = async (product) => {
+        try {
+            await ipcRenderer.invoke('RemoveProductFromShelf', product);
+            // Update the list of products after deletion
+            setProductOnShelf(productsOnShelf.filter((p) => p !== product));
+
+            if (productsOnShelf.length === 0) {
+                const result = await ipcRenderer.invoke('searchByIndeksOnRack', product['indeks']);
+                console.log('Search result:', result);
+                console.log('Searching for:', product['indeks']);
+
+                if (result.length > 0) {
+                    const productList = result.map((item) => item);
+                    console.log('New product list:', productList);
+                    setSearchingProduct(productList);
+                    setProductOnShelf('');
+                    setCellInfo('');
+                }
+            }
+        } catch (error) {
+            console.error('Error removing product:', error);
+        }
+    };
 
     return (
         <div className={`${styles.search_container}`}>
@@ -73,10 +103,10 @@ export default function SearchCell({ cellInfo, productsOnShelf }) {
                                 </div>
                             </div>
                             <div className={styles.product_edit_options}>
-                                <div className={styles.icon_container}>
+                                <div className={styles.icon_container} onClick={() => editProductOnShelf(product)}>
                                     <FontAwesomeIcon icon={faPen} className={`${styles.edit_icon} ${styles.icon}`} />
                                 </div>
-                                <div className={styles.icon_container}>
+                                <div className={styles.icon_container} onClick={() => removeProductFromShelf(product)}>
                                     <FontAwesomeIcon
                                         icon={faTrashCan}
                                         className={`${styles.delete_icon} ${styles.icon}`}

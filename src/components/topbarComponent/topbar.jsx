@@ -20,8 +20,7 @@ export default function TopBar({ activeButton, searchingProduct, cellInfo }) {
                 )}
                 {searchingProduct && !cellInfo ? (
                     <span>
-                        Wynik <span className={styles.wyszukaj}>wyszukiwania</span> dla{' '}
-                        <span className={styles.wyszukaj}>{searchingProduct[0]['indeks']}</span>
+                        Wynik <span className={styles.wyszukaj}>wyszukiwania</span>
                     </span>
                 ) : (
                     ''

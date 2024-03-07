@@ -70,6 +70,29 @@ async function searchByCell(cellSymbol, productIndeks) {
     }
 }
 
+async function removeProductFromShelf(product) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+        const query = {
+            indeks: product['indeks'],
+            nr_zapisu: product['nr_zapisu'],
+            ean13: product['ean13'],
+            description: product['description'],
+            date: product['date'],
+            cell: product['cell'],
+            weight: product['weight'],
+        };
+        const result = await client.db('Onduline').collection('Rack').deleteOne(query);
+        console.log(`${result.deletedCount} document(s) deleted`);
+        await client.close();
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -109,4 +132,8 @@ ipcMain.handle('searchByIndeksOnRack', async (event, productIndeks) => {
 
 ipcMain.handle('searchByCell', async (event, cellSymbol, productIndeks) => {
     return await searchByCell(cellSymbol, productIndeks);
+});
+
+ipcMain.handle('RemoveProductFromShelf', async (event, product) => {
+    return await removeProductFromShelf(product);
 });
