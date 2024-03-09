@@ -24,11 +24,6 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
         }
     });
 
-    // Function to edit product on shelf
-    const editProductOnShelf = (product) => {
-        return;
-    };
-
     const removeProductFromShelf = async (product) => {
         try {
             await ipcRenderer.invoke('RemoveProductFromShelf', product);
@@ -103,9 +98,6 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
                                 </div>
                             </div>
                             <div className={styles.product_edit_options}>
-                                <div className={styles.icon_container} onClick={() => editProductOnShelf(product)}>
-                                    <FontAwesomeIcon icon={faPen} className={`${styles.edit_icon} ${styles.icon}`} />
-                                </div>
                                 <div className={styles.icon_container} onClick={() => removeProductFromShelf(product)}>
                                     <FontAwesomeIcon
                                         icon={faTrashCan}
