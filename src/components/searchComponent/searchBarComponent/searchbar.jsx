@@ -47,42 +47,22 @@ export default function SearchBar({
     };
 
     const handleSearchingIndeks = async () => {
-        if (
-            selectedSearchMethod === 'indeks' &&
-            productIndeks !== '' &&
-            searchResult === '' &&
-            productIndeks.length === 8
-        ) {
+        if (selectedSearchMethod === 'indeks' && productIndeks !== '' && productIndeks.length === 8) {
             try {
-                const result = await ipcRenderer.invoke('searchByIndeks', productIndeks);
+                const result = await ipcRenderer.invoke('searchByIndeksOnRack', productIndeks);
                 console.log('Search result:', result);
                 console.log('Searching for:', productIndeks);
 
                 if (result.length > 0) {
-                    try {
-                        const result = await ipcRenderer.invoke('searchByIndeksOnRack', productIndeks);
-                        console.log('Search result:', result);
-                        console.log('Searching for:', productIndeks);
-
-                        if (result.length > 0) {
-                            const productList = result.map((item) => item);
-                            console.log('Product list:', productList);
-                            setSearchingProduct(productList);
-                        } else {
-                            // No product found on the rack
-                            setCommunicate(
-                                `Błąd: Produkt "${productIndeks}" nie został znaleziony na regałach wysokiego składowania.`
-                            );
-                            setSearchResult('no_product_on_shelves');
-                        }
-                    } catch (error) {
-                        console.error('Error searching by index:', error);
-                        setCommunicate('Błąd: Wystąpił błąd podczas wyszukiwania.');
-                    }
+                    const productList = result.map((item) => item);
+                    console.log('Product list:', productList);
+                    setSearchingProduct(productList);
                 } else {
-                    // No product found in the database
-                    setCommunicate(`Błąd: Produkt "${productIndeks}" nie został znaleziony w bazie.`);
-                    setSearchResult('no_product_in_database');
+                    // No product found on the rack
+                    setCommunicate(
+                        `Błąd: Produkt "${productIndeks}" nie został znaleziony na regałach wysokiego składowania.`
+                    );
+                    setSearchResult('no_product_on_shelves');
                 }
             } catch (error) {
                 console.error('Error searching by index:', error);
@@ -90,7 +70,7 @@ export default function SearchBar({
             }
         } else if (selectedSearchMethod === 'indeks' && productIndeks === '') {
             setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
-        } else if (selectedSearchMethod === 'indeks' && productIndeks !== '' && productIndeks.length !== 8) {
+        } else if (selectedSearchMethod === 'indeks' && productIndeks.length !== 8) {
             setCommunicate(`Błąd: Wprowadzony kod INDEKS jest krótszy niż wymagane 8 znaków.`);
             setSearchResult('search_is_too_short');
         } else {
@@ -98,9 +78,26 @@ export default function SearchBar({
         }
     };
 
-    const handleSearchingNumer = () => {
+    const handleSearchingNumer = async () => {
         if (selectedSearchMethod === 'numer' && productNR !== '' && searchResult === '') {
-            setSearchingProduct(productNR);
+            try {
+                const result = await ipcRenderer.invoke('searchByNumerOnRack', productNR);
+                console.log('Search result:', result);
+                console.log('Searching for:', productNR);
+
+                if (result.length > 0) {
+                    const productList = result.map((item) => item);
+                    console.log('Product list:', productList);
+                    setSearchingProduct(productList);
+                } else {
+                    // No product found in the database
+                    setCommunicate(`Błąd: Produkt "${productNR}" nie został znaleziony w bazie.`);
+                    setSearchResult('no_product_in_database');
+                }
+            } catch (error) {
+                console.error('Error searching by number:', error);
+                setCommunicate('Błąd: Wystąpił błąd podczas wyszukiwania.');
+            }
         } else if (selectedSearchMethod === 'numer' && productNR === '') {
             setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
         } else if (selectedSearchMethod === 'numer' && productNR !== '' && searchResult === 'no_product_in_database') {
@@ -112,9 +109,26 @@ export default function SearchBar({
         }
     };
 
-    const handleSearchingEAN = () => {
+    const handleSearchingEAN = async () => {
         if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === '' && productEAN.length === 13) {
-            setSearchingProduct(productEAN);
+            try {
+                const result = await ipcRenderer.invoke('searchByEANOnRack', productEAN);
+                console.log('Search result:', result);
+                console.log('Searching for:', productEAN);
+
+                if (result.length > 0) {
+                    const productList = result.map((item) => item);
+                    console.log('Product list:', productList);
+                    setSearchingProduct(productList);
+                } else {
+                    // No product found in the database
+                    setCommunicate(`Błąd: Produkt "${productEAN}" nie został znaleziony w bazie.`);
+                    setSearchResult('no_product_in_database');
+                }
+            } catch (error) {
+                console.error('Error searching by EAN:', error);
+                setCommunicate('Błąd: Wystąpił błąd podczas wyszukiwania.');
+            }
         } else if (selectedSearchMethod === 'ean' && productEAN === '') {
             setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
         } else if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === 'no_product_in_database') {
