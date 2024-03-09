@@ -14,14 +14,12 @@ export default function Options({
 }) {
     const onButtonClick = (buttonTitle) => {
         setActiveButton(buttonTitle);
-        if (buttonTitle !== 'Wyszukaj') {
-            setCommunicate('');
-            setProductIndeks('');
-            setProductNR('');
-            setProductEAN('');
-            setSearchingProduct('');
-            setCellInfo('');
-        }
+        setCommunicate('');
+        setProductIndeks('');
+        setProductNR('');
+        setProductEAN('');
+        setSearchingProduct('');
+        setCellInfo('');
     };
 
     const getWyświetlIndicatorClassName = () => {
