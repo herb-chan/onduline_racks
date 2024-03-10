@@ -132,6 +132,71 @@ async function removeProductFromShelf(product) {
     }
 }
 
+async function searchByIndeks(productIndeks) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+        // Example query: find documents with a specific index
+        const query = { Nr: productIndeks };
+        const result = await client.db('Onduline').collection('Products').find(query).toArray();
+        console.log(`You successfully connected to MongoDB!`);
+
+        // Close the connection
+        await client.close();
+
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
+async function putProductOnShelf(validResult, cellSymbol) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+
+        const product = {
+            Nr: validResult[0]['Nr'],
+            'Local Code': validResult[0]['Local Code'],
+            'Kod raportowania': validResult[0]['Kod raportowania'],
+            Opis: validResult[0]['Opis'],
+            Zablokowane: validResult[0]['Zablokowane'],
+            'Opis 2': validResult[0]['Opis 2'],
+            Zapasy: validResult[0]['Zapasy'],
+            'Istnieją substytuty': validResult[0]['Istnieją substytuty'],
+            'BOM kompletacji': validResult[0]['BOM kompletacji'],
+            'Podst. jednostka miary': validResult[0]['Podst. jednostka miary'],
+            'Koszt jest skorygowany': validResult[0]['Koszt jest skorygowany'],
+            'Koszt jednostkowy (zaokr.)': validResult[0]['Koszt jednostkowy (zaokr.)'],
+            'Cena jednostkowa': validResult[0]['Cena jednostkowa'],
+            'Opis szukany': validResult[0]['Opis szukany'],
+            'QSM Code': validResult[0]['QSM Code'],
+            'Sprzedaż (ilość)': validResult[0]['Sprzedaż (ilość)'],
+            'Domyślny kod lokalizacji': validResult[0]['Domyślny kod lokalizacji'],
+            'Ilość na zamówieniu sprzedaży': validResult[0]['Ilość na zamówieniu sprzedaży'],
+            'Ilość na zleceniu prod.': validResult[0]['Ilość na zleceniu prod.'],
+            'Ilość w wierszach komponentu': validResult[0]['Ilość w wierszach komponentu'],
+            'Waga netto': validResult[0]['Waga netto'],
+            'Waga brutto': validResult[0]['Waga brutto'],
+            Wycofany: validResult[0]['Wycofany'],
+            'Towar niebezpieczny': validResult[0]['Towar niebezpieczny'],
+            Cell: cellSymbol,
+            Date: new Date(),
+        };
+
+        // Insert the new record into the Rack collection
+        const result = await client.db('Onduline').collection('Rack').insertOne(product);
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
@@ -193,4 +258,12 @@ ipcMain.handle('searchTheCell', async (event, cellSymbol) => {
 
 ipcMain.handle('RemoveProductFromShelf', async (event, product) => {
     return await removeProductFromShelf(product);
+});
+
+ipcMain.handle('searchByIndeks', async (event, productIndeks) => {
+    return await searchByIndeks(productIndeks);
+});
+
+ipcMain.handle('putProductOnShelf', async (event, validResult, cellSymbol) => {
+    return await putProductOnShelf(validResult, cellSymbol);
 });

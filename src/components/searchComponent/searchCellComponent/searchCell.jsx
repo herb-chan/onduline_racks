@@ -1,10 +1,19 @@
 import styles from './searchCell.module.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrashCan, faClock, faHashtag, faQrcode, faTag, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faClock, faQrcode, faTag, faNewspaper, faPlus } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
-export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, setProductOnShelf, setSearchingProduct }) {
+export default function SearchCell({
+    cellInfo,
+    setCellInfo,
+    productsOnShelf,
+    setProductOnShelf,
+    setSearchingProduct,
+    isAdding,
+    setIsAdding,
+    isAddingButton,
+}) {
     // Initialize variables to store the oldest and youngest product
     let oldestProduct = null;
     let youngestProduct = null;
@@ -52,6 +61,12 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
         }
     };
 
+    const handleClickingAdd = async () => {
+        setIsAdding(true);
+        setProductOnShelf('');
+        console.log(cellInfo);
+    };
+
     return (
         <div className={`${styles.search_container}`}>
             <div className={styles.products_on_shelf_container}>
@@ -73,13 +88,15 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
                                             <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks
                                             produktu
                                             <br />
-                                            <span className={styles.product_name_info_base}>"{product.Nr}"</span>
+                                            <span className={styles.product_name_info_base}>{product.Nr}</span>
                                         </p>
                                         <p className={styles.product_name_info}>
                                             <FontAwesomeIcon icon={faQrcode} className={`${styles.icon}`} /> Kod EAN13
                                             <br />
                                             <span className={styles.product_name_info_base}>
-                                                "{product['Kod kreskowy jedn. podstaw.']}"
+                                                {product['Kod kreskowy jedn. podstaw.']
+                                                    ? product['Kod kreskowy jedn. podstaw.']
+                                                    : 'Brak'}
                                             </span>
                                         </p>
                                     </div>
@@ -108,6 +125,13 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
                         </div>
                     );
                 })}
+                {isAddingButton ? (
+                    <div className={styles.add_icon_container} onClick={handleClickingAdd}>
+                        <FontAwesomeIcon icon={faPlus} className={`${styles.add_icon} ${styles.icon}`} />
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );

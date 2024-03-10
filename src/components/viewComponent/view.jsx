@@ -4,7 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faBox } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
-export default function ViewAction({ setCellInfo, setProductOnShelf, setActiveButton }) {
+export default function ViewAction({
+    setCellInfo,
+    setProductOnShelf,
+    setActiveButton,
+    setIsAddingButton,
+    setIsAdding,
+}) {
     const [cellProductsCount, setCellProductsCount] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -35,6 +41,7 @@ export default function ViewAction({ setCellInfo, setProductOnShelf, setActiveBu
 
     const handleClickingOnShelf = async (cellSymbol) => {
         console.log(cellSymbol);
+        setIsAddingButton(true);
         try {
             const result = await ipcRenderer.invoke('searchTheCell', cellSymbol);
 
@@ -43,6 +50,11 @@ export default function ViewAction({ setCellInfo, setProductOnShelf, setActiveBu
                 setProductOnShelf(result);
                 setCellInfo(cellSymbol);
                 console.log(result, cellSymbol);
+            } else {
+                setActiveButton('Wyszukaj');
+                setProductOnShelf('');
+                setCellInfo(cellSymbol);
+                setIsAdding(true);
             }
         } catch (error) {
             console.error('Error searching cell:', error);
@@ -57,14 +69,8 @@ export default function ViewAction({ setCellInfo, setProductOnShelf, setActiveBu
                         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'Ł', 'M'].map((col) => (
                             <td
                                 key={col}
-                                className={
-                                    cellProductsCount[`${col}${row}`] > 0 ? `${styles.clickable}` : `${styles.cell}`
-                                }
-                                onClick={() => {
-                                    if (cellProductsCount[`${col}${row}`] > 0) {
-                                        handleClickingOnShelf(`${col}${row}`);
-                                    }
-                                }}>
+                                className={`${styles.clickable} ${styles.cell}`}
+                                onClick={() => handleClickingOnShelf(`${col}${row}`)}>
                                 <div className={styles.cell_inner}>
                                     <div
                                         className={`${styles.cell_symbol}`}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './searchBarComponent/searchbar';
 import SearchResult from './searchResultComponent/searchresult';
 import SearchCell from './searchCellComponent/searchCell';
+import AddProduct from './addNewProductComponent/add';
 
 export default function SearchAction({
     productIndeks,
@@ -20,17 +21,23 @@ export default function SearchAction({
     setCellInfo,
     productsOnShelf,
     setProductOnShelf,
+    productToAdd,
+    setProductToAdd,
+    isAdding,
+    setIsAdding,
+    isAddingButton,
+    setIsAddingButton,
 }) {
     const [selectedSearchMethod, setSelectedSearchMethod] = useState('indeks');
 
     // Handle changes in productsOnShelf array
-    useEffect(() => {
-        // If there are no products on shelf, reset the cellInfo state and searchingProduct state
-        if (productsOnShelf.length === 0 && cellInfo) {
-            setCellInfo('');
-            setSearchingProduct(''); // Reset to empty array to trigger re-fetch of data in SearchResult
-        }
-    }, [productsOnShelf, cellInfo, setCellInfo, setSearchingProduct]);
+    // useEffect(() => {
+    //     // If there are no products on shelf, reset the cellInfo state and searchingProduct state
+    //     if (productsOnShelf.length === 0 && cellInfo) {
+    //         setCellInfo('');
+    //         setSearchingProduct(''); // Reset to empty array to trigger re-fetch of data in SearchResult
+    //     }
+    // }, [productsOnShelf, cellInfo, setCellInfo, setSearchingProduct]);
 
     return (
         <>
@@ -50,6 +57,8 @@ export default function SearchAction({
                     setCommunicate={setCommunicate}
                     selectedSearchMethod={selectedSearchMethod}
                     setSelectedSearchMethod={setSelectedSearchMethod}
+                    setIsAddingButton={setIsAddingButton}
+                    setIsAdding={setIsAdding}
                 />
             ) : null}
             {searchingProduct !== '' && !cellInfo ? (
@@ -60,13 +69,27 @@ export default function SearchAction({
                     setProductOnShelf={setProductOnShelf}
                 />
             ) : null}
-            {cellInfo && productsOnShelf ? (
+            {cellInfo && productsOnShelf && !productToAdd ? (
                 <SearchCell
                     cellInfo={cellInfo}
                     setCellInfo={setCellInfo}
                     productsOnShelf={productsOnShelf}
                     setProductOnShelf={setProductOnShelf}
                     setSearchingProduct={setSearchingProduct}
+                    isAdding={isAdding}
+                    setIsAdding={setIsAdding}
+                    isAddingButton={isAddingButton}
+                />
+            ) : null}
+            {cellInfo && isAdding ? (
+                <AddProduct
+                    productToAdd={productToAdd}
+                    setProductToAdd={setProductToAdd}
+                    communicate={communicate}
+                    setCommunicate={setCommunicate}
+                    cellInfo={cellInfo}
+                    setIsAdding={setIsAdding}
+                    setProductOnShelf={setProductOnShelf}
                 />
             ) : null}
         </>

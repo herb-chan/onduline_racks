@@ -120,16 +120,31 @@
     background-color: #171717;
     border-radius: 16px;
     transition: 0.25s;
+    cursor: pointer;
 }
 
 .icon_container:hover {
     transform: scale(1.05);
 }
 
-.icon_container:hover .edit_icon {
-    color: #f3b255;
-}
-
 .icon_container:hover .delete_icon {
     color: #e16369;
+}
+
+.add_icon_container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #171717;
+    border-radius: 16px;
+    transition: 0.25s;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.add_icon_container:hover .add_icon {
+    color: #48b871;
 }

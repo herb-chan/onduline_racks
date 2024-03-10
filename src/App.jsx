@@ -15,6 +15,9 @@ function App() {
     const [communicate, setCommunicate] = useState('');
     const [cellInfo, setCellInfo] = useState('');
     const [productsOnShelf, setProductOnShelf] = useState('');
+    const [productToAdd, setProductToAdd] = useState('');
+    const [isAdding, setIsAdding] = useState(false);
+    const [isAddingButton, setIsAddingButton] = useState(false);
 
     return (
         <div className="App">
@@ -35,6 +38,8 @@ function App() {
                         setCellInfo={setCellInfo}
                         setProductOnShelf={setProductOnShelf}
                         setActiveButton={setActiveButton}
+                        setIsAddingButton={setIsAddingButton}
+                        setIsAdding={setIsAdding}
                     />
                 ) : (
                     <SearchAction
@@ -54,6 +59,12 @@ function App() {
                         setCellInfo={setCellInfo}
                         productsOnShelf={productsOnShelf}
                         setProductOnShelf={setProductOnShelf}
+                        productToAdd={productToAdd}
+                        setProductToAdd={setProductToAdd}
+                        isAdding={isAdding}
+                        setIsAdding={setIsAdding}
+                        isAddingButton={isAddingButton}
+                        setIsAddingButton={setIsAddingButton}
                     />
                 )}
             </div>

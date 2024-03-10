@@ -16,17 +16,23 @@ export default function SearchBar({
     setCommunicate,
     selectedSearchMethod,
     setSelectedSearchMethod,
+    setIsAddingButton,
+    setIsAdding,
 }) {
     const handleIndeksInputChange = (e) => {
         setProductIndeks(e.target.value);
         setSearchResult('');
         setCommunicate('');
+        setIsAddingButton(false);
+        setIsAdding(false);
     };
 
     const handleEANInputChange = (e) => {
         setProductEAN(e.target.value);
         setSearchResult('');
         setCommunicate('');
+        setIsAddingButton(false);
+        setIsAdding(false);
     };
 
     const handleSelectSearchMethodChange = (e) => {
@@ -39,6 +45,8 @@ export default function SearchBar({
 
     const handleSearchingIndeks = async () => {
         if (selectedSearchMethod === 'indeks' && productIndeks !== '' && productIndeks.length === 8) {
+            setIsAdding(false);
+            setIsAddingButton(false);
             try {
                 const result = await ipcRenderer.invoke('searchByIndeksOnRack', productIndeks);
                 console.log('Search result:', result);
@@ -71,6 +79,8 @@ export default function SearchBar({
 
     const handleSearchingEAN = async () => {
         if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === '' && productEAN.length === 13) {
+            setIsAdding(false);
+            setIsAddingButton(false);
             try {
                 const result = await ipcRenderer.invoke('searchByEANOnRack', productEAN);
                 console.log('Search result:', result);
