@@ -23,11 +23,11 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
         }
 
         // Find oldest and most recent dates
-        let oldestDate = new Date(searchingProduct[0].date);
-        let mostRecentDate = new Date(searchingProduct[0].date);
+        let oldestDate = new Date(searchingProduct[0].Date);
+        let mostRecentDate = new Date(searchingProduct[0].Date);
 
         searchingProduct.forEach((product) => {
-            const productDate = new Date(product.date);
+            const productDate = new Date(product.Date);
             if (productDate < oldestDate) {
                 oldestDate = productDate;
             }
@@ -40,16 +40,16 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
         const updatedCellCounts = {};
 
         searchingProduct.forEach((product) => {
-            const cell_symbol = product.cell;
+            const cell_symbol = product.Cell;
             updatedCellCounts[cell_symbol] = (updatedCellCounts[cell_symbol] || 0) + 1;
 
-            const productDate = new Date(product.date);
+            const productDate = new Date(product.Date);
             if (productDate.getTime() === oldestDate.getTime()) {
                 updatedCellColors[cell_symbol] = '#e16369'; // Set to red color
-                setOldestCell(product.cell); // Set oldest product
+                setOldestCell(product.Cell); // Set oldest product
             } else if (productDate.getTime() === mostRecentDate.getTime()) {
                 updatedCellColors[cell_symbol] = '#48b871'; // Set to green color
-                setRecentCell(product.cell); // Set most recent product
+                setRecentCell(product.Cell); // Set most recent product
             } else {
                 updatedCellColors[cell_symbol] = '#48b871'; // Default color
             }
@@ -73,7 +73,7 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
                                     className={`${styles.cell} ${hasProduct ? styles.cell_with_product : ''}`}
                                     onClick={
                                         hasProduct
-                                            ? () => onCellWithProductClick(cellSymbol, searchingProduct[0]['indeks'])
+                                            ? () => onCellWithProductClick(cellSymbol, searchingProduct[0]['Nr'])
                                             : undefined
                                     }>
                                     <div className={styles.cell_inner}>

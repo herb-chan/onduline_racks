@@ -11,15 +11,15 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
 
     // Iterate through products to find the oldest and youngest
     productsOnShelf.forEach((product) => {
-        const productDate = new Date(product.date);
+        const productDate = new Date(product.Date);
 
         // Check if oldestProduct is null or if the current product is older than the stored oldest product
-        if (oldestProduct === null || productDate < new Date(oldestProduct.date)) {
+        if (oldestProduct === null || productDate < new Date(oldestProduct.Date)) {
             oldestProduct = product;
         }
 
         // Check if youngestProduct is null or if the current product is younger than the stored youngest product
-        if (youngestProduct === null || productDate > new Date(youngestProduct.date)) {
+        if (youngestProduct === null || productDate > new Date(youngestProduct.Date)) {
             youngestProduct = product;
         }
     });
@@ -29,11 +29,15 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
             await ipcRenderer.invoke('RemoveProductFromShelf', product);
             // Update the list of products after deletion
             setProductOnShelf(productsOnShelf.filter((p) => p !== product));
-
+            console.log(product);
             if (productsOnShelf.length === 0) {
-                const result = await ipcRenderer.invoke('searchByIndeksOnRack', product['indeks']);
+                const result = await ipcRenderer.invoke('searchByIndeksOnRack', product['Nr']);
                 console.log('Search result:', result);
-                console.log('Searching for:', product['indeks']);
+                console.log('Indeks:', product['Nr']);
+                console.log('EAN13:', product['Kod kreskowy jedn. podstaw.']);
+                console.log('Description:', product['Opis 2']);
+                console.log('Cell:', product['Cell']);
+                console.log('Date:', product['Date']);
 
                 if (result.length > 0) {
                     const productList = result.map((item) => item);
@@ -53,7 +57,7 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
             <div className={styles.products_on_shelf_container}>
                 {productsOnShelf.map((product, index) => {
                     // Convert the date string to a Date object
-                    const date = new Date(product.date);
+                    const date = new Date(product.Date);
                     // Format the date to display only day, month, and year
                     const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
                     // Determine if the current product is the youngest or oldest
@@ -69,24 +73,20 @@ export default function SearchCell({ cellInfo, setCellInfo, productsOnShelf, set
                                             <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks
                                             produktu
                                             <br />
-                                            <span className={styles.product_name_info_base}>"{product.indeks}"</span>
-                                        </p>
-                                        <p className={styles.product_name_info}>
-                                            <FontAwesomeIcon icon={faHashtag} className={`${styles.icon}`} /> Numer
-                                            zapisu
-                                            <br />
-                                            <span className={styles.product_name_info_base}>"{product.nr_zapisu}"</span>
+                                            <span className={styles.product_name_info_base}>"{product.Nr}"</span>
                                         </p>
                                         <p className={styles.product_name_info}>
                                             <FontAwesomeIcon icon={faQrcode} className={`${styles.icon}`} /> Kod EAN13
                                             <br />
-                                            <span className={styles.product_name_info_base}>"{product.ean13}"</span>
+                                            <span className={styles.product_name_info_base}>
+                                                "{product['Kod kreskowy jedn. podstaw.']}"
+                                            </span>
                                         </p>
                                     </div>
                                     <div className={styles.product_description_container}>
                                         <span>
                                             <FontAwesomeIcon icon={faNewspaper} className={`${styles.icon}`} />{' '}
-                                            {product.description}
+                                            {product['Opis 2']}
                                         </span>
                                     </div>
                                 </div>

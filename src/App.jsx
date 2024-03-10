@@ -31,7 +31,11 @@ function App() {
             <div className="top_action">
                 <TopBar activeButton={activeButton} searchingProduct={searchingProduct} cellInfo={cellInfo} />
                 {activeButton === 'Wyświetl' ? (
-                    <ViewAction />
+                    <ViewAction
+                        setCellInfo={setCellInfo}
+                        setProductOnShelf={setProductOnShelf}
+                        setActiveButton={setActiveButton}
+                    />
                 ) : (
                     <SearchAction
                         productIndeks={productIndeks}

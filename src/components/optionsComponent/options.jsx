@@ -7,7 +7,6 @@ export default function Options({
     setActiveButton,
     setCommunicate,
     setProductIndeks,
-    setProductNR,
     setProductEAN,
     setSearchingProduct,
     setCellInfo,
@@ -16,7 +15,6 @@ export default function Options({
         setActiveButton(buttonTitle);
         setCommunicate('');
         setProductIndeks('');
-        setProductNR('');
         setProductEAN('');
         setSearchingProduct('');
         setCellInfo('');

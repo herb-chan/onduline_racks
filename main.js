@@ -14,17 +14,17 @@ const client = new MongoClient(uri, {
     },
 });
 
-// Connect to MongoDB and perform search
-async function searchByIndeks(productIndeks) {
+async function fetchShelvesData() {
     try {
         await client.connect();
         await client.db('Onduline').command({ ping: 1 });
-        // Example query: find documents with a specific index
-        const query = { indeks: productIndeks };
-        const result = await client.db('Onduline').collection('Products').find(query).toArray();
-        console.log(`You successfully connected to MongoDB!`);
 
-        // Close the connection
+        const query = {};
+        const result = await client.db('Onduline').collection('Rack').find(query).toArray();
+
+        const date = new Date();
+        console.log(date);
+
         await client.close();
 
         return result;
@@ -39,7 +39,26 @@ async function searchByIndeksOnRack(productIndeks) {
         await client.connect();
         await client.db('Onduline').command({ ping: 1 });
         // Example query: find documents with a specific index
-        const query = { indeks: productIndeks };
+        const query = { Nr: productIndeks };
+        const result = await client.db('Onduline').collection('Rack').find(query).toArray();
+        console.log(`You successfully connected to MongoDB!`);
+
+        // Close the connection
+        await client.close();
+
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
+async function searchByEANOnRack(productEAN) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+        // Example query: find documents with a specific index
+        const query = { 'Kod kreskowy jedn. podstaw.': productEAN };
         const result = await client.db('Onduline').collection('Rack').find(query).toArray();
         console.log(`You successfully connected to MongoDB!`);
 
@@ -58,7 +77,24 @@ async function searchByCell(cellSymbol, productIndeks) {
         await client.connect();
         await client.db('Onduline').command({ ping: 1 });
 
-        const query = { cell: cellSymbol, indeks: productIndeks };
+        const query = { Cell: cellSymbol, Nr: productIndeks };
+        const result = await client.db('Onduline').collection('Rack').find(query).toArray();
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        console.error('Error executing query:', error);
+        throw error;
+    }
+}
+
+async function searchTheCell(cellSymbol) {
+    try {
+        await client.connect();
+        await client.db('Onduline').command({ ping: 1 });
+
+        const query = { Cell: cellSymbol };
         const result = await client.db('Onduline').collection('Rack').find(query).toArray();
 
         await client.close();
@@ -75,16 +111,14 @@ async function removeProductFromShelf(product) {
         await client.connect();
         await client.db('Onduline').command({ ping: 1 });
         const query = {
-            indeks: product['indeks'],
-            nr_zapisu: product['nr_zapisu'],
-            ean13: product['ean13'],
-            description: product['description'],
-            date: product['date'],
-            cell: product['cell'],
-            weight: product['weight'],
+            Nr: product['Nr'],
+            Cell: product['Cell'],
+            Date: product['Date'],
         };
+
         const result = await client.db('Onduline').collection('Rack').deleteOne(query);
         console.log(`${result.deletedCount} document(s) deleted`);
+        console.log(product['Nr']);
         await client.close();
         return result;
     } catch (error) {
@@ -122,16 +156,24 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();
 });
 
-ipcMain.handle('searchByIndeks', async (event, productIndeks) => {
-    return await searchByIndeks(productIndeks);
+ipcMain.handle('fetchShelvesData', async (event) => {
+    return await fetchShelvesData();
 });
 
 ipcMain.handle('searchByIndeksOnRack', async (event, productIndeks) => {
     return await searchByIndeksOnRack(productIndeks);
 });
 
+ipcMain.handle('searchByEANOnRack', async (event, productEAN) => {
+    return await searchByEANOnRack(productEAN);
+});
+
 ipcMain.handle('searchByCell', async (event, cellSymbol, productIndeks) => {
     return await searchByCell(cellSymbol, productIndeks);
+});
+
+ipcMain.handle('searchTheCell', async (event, cellSymbol) => {
+    return await searchTheCell(cellSymbol);
 });
 
 ipcMain.handle('RemoveProductFromShelf', async (event, product) => {
