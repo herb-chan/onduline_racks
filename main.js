@@ -1,9 +1,14 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 // Define MongoDB URI
 const uri =
     'mongodb+srv://admin:HvD&a3&!Bkdv2nD@onduline-racks.kbynhhf.mongodb.net/?retryWrites=true&w=majority&appName=onduline-racks';
+
+const viewShortcut = 'Alt+V';
+const searchShortcut = 'Alt+S';
+
+let mainWindow;
 
 // Create MongoDB client
 const client = new MongoClient(uri, {
@@ -128,13 +133,13 @@ async function removeProductFromShelf(product) {
 }
 
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         icon: path.join(__dirname, 'favicon.ico'),
-        nodeIntegration: false, // is default value after Electron v5
-        contextIsolation: true, // protect against prototype pollution
-        enableRemoteModule: false, // turn off remote
+        nodeIntegration: false,
+        contextIsolation: true,
+        enableRemoteModule: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true,
@@ -149,6 +154,16 @@ app.whenReady().then(() => {
 
     app.on('activate', function () {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+
+    globalShortcut.register(viewShortcut, () => {
+        // Send an IPC message to the renderer process
+        mainWindow.webContents.send('shortcutTriggered', 'viewShortcut');
+    });
+
+    globalShortcut.register(searchShortcut, () => {
+        // Send an IPC message to the renderer process
+        mainWindow.webContents.send('shortcutTriggered', 'searchShortcut');
     });
 });
 

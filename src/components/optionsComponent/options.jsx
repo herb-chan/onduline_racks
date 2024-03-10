@@ -1,6 +1,8 @@
 import styles from './options.module.css';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBox, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+const { ipcRenderer } = window.require('electron');
 
 export default function Options({
     activeButton,
@@ -19,6 +21,26 @@ export default function Options({
         setSearchingProduct('');
         setCellInfo('');
     };
+
+    useEffect(() => {
+        const handleShortcut = (event, shortcut) => {
+            let title;
+            if (shortcut === 'viewShortcut') {
+                title = 'Wyświetl';
+            } else if (shortcut === 'searchShortcut') {
+                title = 'Wyszukaj';
+            }
+            onButtonClick(title);
+        };
+
+        // Listen for IPC messages from the main process
+        ipcRenderer.on('shortcutTriggered', handleShortcut);
+
+        // Cleanup the event listener
+        return () => {
+            ipcRenderer.removeListener('shortcutTriggered', handleShortcut);
+        };
+    }, []);
 
     const getWyświetlIndicatorClassName = () => {
         return activeButton === 'Wyświetl' ? styles.wyświetl_indicator_active : styles.indicator_inactive;
