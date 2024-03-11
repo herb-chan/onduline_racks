@@ -201,6 +201,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        fullscreen: true, // Set fullscreen to true
         icon: path.join(__dirname, 'favicon.ico'),
         nodeIntegration: false,
         contextIsolation: true,
@@ -211,7 +212,8 @@ function createWindow() {
             contextIsolation: false,
         },
     });
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.setMenuBarVisibility(false);
+    mainWindow.loadURL(`file://${__dirname}/../build/index.html`);
 }
 
 app.whenReady().then(() => {

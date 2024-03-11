@@ -40,8 +40,8 @@ export default function ViewAction({
     };
 
     const handleClickingOnShelf = async (cellSymbol) => {
-        console.log(cellSymbol);
         setIsAddingButton(true);
+        setIsAdding(false);
         try {
             const result = await ipcRenderer.invoke('searchTheCell', cellSymbol);
 
@@ -49,6 +49,7 @@ export default function ViewAction({
                 setActiveButton('Wyszukaj');
                 setProductOnShelf(result);
                 setCellInfo(cellSymbol);
+                setIsAdding(false);
                 console.log(result, cellSymbol);
             } else {
                 setActiveButton('Wyszukaj');

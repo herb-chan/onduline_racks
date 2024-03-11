@@ -1,7 +1,10 @@
 {
     "name": "onduline_racks",
-    "version": "0.1.0",
+    "author": "Onduline",
+    "version": "1.1.0",
+    "description": "Onduline Magazynier",
     "private": true,
+    "homepage": "./",
     "dependencies": {
         "@craco/craco": "^7.1.0",
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -13,7 +16,7 @@
         "browserify-zlib": "^0.2.0",
         "concurrently": "^8.2.2",
         "crypto-browserify": "^3.12.0",
-        "electron": "^29.1.0",
+        "electron-is-dev": "^3.0.1",
         "mongodb": "^6.4.0",
         "os-browserify": "^0.3.0",
         "process": "^0.11.10",
@@ -27,13 +30,14 @@
         "util": "^0.12.5",
         "wait-on": "^7.2.0"
     },
-    "main": "main.js",
+    "main": "public/electron.js",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "app": "concurrently \"SET BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\""
+        "app": "concurrently \"SET BROWSER=none&&yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+        "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron.js"
     },
     "eslintConfig": {
         "extends": [
@@ -43,17 +47,44 @@
     },
     "browserslist": {
         "production": [
+            "last 1 electron version",
             ">0.2%",
             "not dead",
             "not op_mini all"
         ],
         "development": [
+            "last 1 electron version",
             "last 1 chrome version",
             "last 1 firefox version",
             "last 1 safari version"
         ]
     },
     "devDependencies": {
+        "electron": "^29.1.0",
+        "electron-builder": "^24.13.3",
         "webpack-node-externals": "^3.0.0"
+    },
+    "build": {
+        "appId": "com.Onduline.OndulineMagazynier",
+        "productName": "Onduline Magazynier",
+        "copyright": "Copyright @2024-2025 Mikołaj Laskowski",
+        "buildVersion": "1.1.0",
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
+        "directories": {
+            "buildResources": "public"
+        },
+        "mac": {
+            "target": "dmg"
+        },
+        "win": {
+            "icon": "public/favicon.ico",
+            "target": "nsis"
+        },
+        "linux": {
+            "target": "deb"
+        }
     }
 }
