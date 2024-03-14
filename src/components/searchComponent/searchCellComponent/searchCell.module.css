@@ -26,12 +26,12 @@
     border-radius: 0px 0px 16px 16px;
 }
 
-.oldest_product {
-    background-color: #e16369;
-}
-
 .youngest_product {
     background-color: #48b871;
+}
+
+.oldest_product {
+    background-color: #e16369;
 }
 
 .product_container {

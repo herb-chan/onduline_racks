@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.9146e950.css",
-    "main.js": "./static/js/main.26a21b6f.js",
+    "main.css": "./static/css/main.4c8f4672.css",
+    "main.js": "./static/js/main.233619a1.js",
     "static/media/racks_logo.png": "./static/media/racks_logo.ab4a90a9a7414fe095c0.png",
     "static/media/onduline_logo.png": "./static/media/onduline_logo.75ed4ac2bcad4407c6e0.png",
     "index.html": "./index.html",
-    "main.9146e950.css.map": "./static/css/main.9146e950.css.map",
-    "main.26a21b6f.js.map": "./static/js/main.26a21b6f.js.map"
+    "main.4c8f4672.css.map": "./static/css/main.4c8f4672.css.map",
+    "main.233619a1.js.map": "./static/js/main.233619a1.js.map"
   },
   "entrypoints": [
-    "static/css/main.9146e950.css",
-    "static/js/main.26a21b6f.js"
+    "static/css/main.4c8f4672.css",
+    "static/js/main.233619a1.js"
   ]
 }
