@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './view.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faBox } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faBox } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function ViewAction({
@@ -64,70 +64,74 @@ export default function ViewAction({
 
     return (
         <div className={`${styles.view_container}`}>
-            <table className={styles.rack}>
+            <div className={styles.rack}>
                 {[5, 4, 3, 2, 1].map((row) => (
-                    <tr key={row}>
+                    <div className={styles.rack_row} key={row}>
                         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'Ł', 'M'].map((col) => (
-                            <td
+                            <div
+                                className={`${styles.rack_cell} ${
+                                    col === 'K' && (row === 1 || row === 2) ? '' : styles.rack_cell_clickable
+                                } ${styles[col]} ${styles[col + row]}`}
                                 key={col}
-                                className={`${styles.clickable} ${styles.cell}`}
-                                onClick={() => handleClickingOnShelf(`${col}${row}`)}>
-                                <div className={styles.cell_inner}>
-                                    <div
-                                        className={`${styles.cell_symbol}`}
-                                        style={{
-                                            backgroundColor:
-                                                cellProductsCount[`${col}${row}`] === 0
-                                                    ? ''
-                                                    : cellProductsCount[`${col}${row}`] === 1
-                                                    ? '#48b871'
-                                                    : cellProductsCount[`${col}${row}`] === 2
-                                                    ? '#f3b255'
-                                                    : cellProductsCount[`${col}${row}`] >= 3
-                                                    ? '#e16369'
-                                                    : '',
-                                        }}>
-                                        {col}
-                                        {row}
-                                    </div>
-                                    <div className={styles.cell_info}>
-                                        <span className={styles.product_count}>
-                                            {loading ? (
-                                                <FontAwesomeIcon
-                                                    icon={faSpinner}
-                                                    className={`${styles.loading_icon}`}
-                                                />
-                                            ) : cellProductsCount[`${col}${row}`] > 0 ? (
-                                                <>
-                                                    <FontAwesomeIcon
-                                                        icon={faBox}
-                                                        className={styles.box_icon}
-                                                        style={{
-                                                            color:
-                                                                cellProductsCount[`${col}${row}`] === 0
-                                                                    ? ''
-                                                                    : cellProductsCount[`${col}${row}`] === 1
-                                                                    ? '#48b871'
-                                                                    : cellProductsCount[`${col}${row}`] === 2
-                                                                    ? '#f3b255'
-                                                                    : cellProductsCount[`${col}${row}`] >= 3
-                                                                    ? '#e16369'
-                                                                    : '',
-                                                        }}
-                                                    />{' '}
-                                                    Ilość: {cellProductsCount[`${col}${row}`]}
-                                                </>
-                                            ) : (
-                                                ''
-                                            )}
-                                        </span>
-                                    </div>
+                                onClick={() => {
+                                    if (col !== 'K' && (row !== 1 || row !== 2)) {
+                                        handleClickingOnShelf(`${col}${row}`);
+                                    }
+                                }}>
+                                <div
+                                    className={`${styles.rack_cell_symbol}`}
+                                    style={{
+                                        backgroundColor:
+                                            cellProductsCount[`${col}${row}`] === 0
+                                                ? ''
+                                                : cellProductsCount[`${col}${row}`] === 1
+                                                ? '#48b871'
+                                                : cellProductsCount[`${col}${row}`] === 2
+                                                ? '#f3b255'
+                                                : cellProductsCount[`${col}${row}`] >= 3
+                                                ? '#e16369'
+                                                : '',
+                                    }}>
+                                    {col}
+                                    {row}
                                 </div>
-                            </td>
+                                <div className={styles.rack_cell_info}>
+                                    <span className={styles.product_count}>
+                                        {loading ? (
+                                            <FontAwesomeIcon
+                                                icon={faCircleNotch}
+                                                className={`${styles.loading_icon}`}
+                                            />
+                                        ) : cellProductsCount[`${col}${row}`] > 0 ? (
+                                            <>
+                                                <FontAwesomeIcon
+                                                    icon={faBox}
+                                                    className={styles.box_icon}
+                                                    style={{
+                                                        color:
+                                                            cellProductsCount[`${col}${row}`] === 0
+                                                                ? ''
+                                                                : cellProductsCount[`${col}${row}`] === 1
+                                                                ? '#48b871'
+                                                                : cellProductsCount[`${col}${row}`] === 2
+                                                                ? '#f3b255'
+                                                                : cellProductsCount[`${col}${row}`] >= 3
+                                                                ? '#e16369'
+                                                                : '',
+                                                    }}
+                                                />{' '}
+                                                Ilość: {cellProductsCount[`${col}${row}`]}
+                                            </>
+                                        ) : (
+                                            ''
+                                        )}
+                                    </span>
+                                </div>
+                            </div>
                         ))}
-                    </tr>
+                    </div>
                 ))}
-            </table>
+            </div>
         </div>
     );
 }

@@ -20,7 +20,7 @@ export default function SearchBar({
     setIsAdding,
 }) {
     const handleIndeksInputChange = (e) => {
-        setProductIndeks(e.target.value);
+        setProductIndeks(e.target.value.toUpperCase());
         setSearchResult('');
         setCommunicate('');
         setIsAddingButton(false);
@@ -44,7 +44,7 @@ export default function SearchBar({
     };
 
     const handleSearchingIndeks = async () => {
-        if (selectedSearchMethod === 'indeks' && productIndeks !== '' && productIndeks.length === 8) {
+        if (selectedSearchMethod === 'indeks' && productIndeks !== '') {
             setIsAdding(false);
             setIsAddingButton(false);
             try {
@@ -112,6 +112,18 @@ export default function SearchBar({
         }
     };
 
+    const handleIndeksKeyPress = async (e) => {
+        if (e.key === 'Enter') {
+            handleSearchingIndeks();
+        }
+    };
+
+    const handleEANKeyPress = async (e) => {
+        if (e.key === 'Enter') {
+            handleSearchingEAN();
+        }
+    };
+
     return (
         <div className={`${styles.search_container}`}>
             <div
@@ -135,8 +147,8 @@ export default function SearchBar({
                         placeholder="Indeks..."
                         value={productIndeks}
                         onChange={handleIndeksInputChange}
-                        minLength={8}
-                        maxLength={8}
+                        minLength={0}
+                        onKeyDown={handleIndeksKeyPress} // Obsługa naciśnięcia klawisza Enter
                     />
                     <select
                         className={`${styles.selected_search_option}`}
@@ -168,6 +180,7 @@ export default function SearchBar({
                         onChange={handleEANInputChange}
                         minLength={13}
                         maxLength={13}
+                        onKeyDown={handleEANKeyPress} // Obsługa naciśnięcia klawisza Enter
                     />
                     <select
                         className={`${styles.selected_search_option}`}

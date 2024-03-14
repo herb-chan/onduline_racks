@@ -1,7 +1,7 @@
 import styles from './searchCell.module.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faClock, faQrcode, faTag, faNewspaper, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faClock, faQrcode, faHashtag, faClipboard, faPlus } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function SearchCell({
@@ -85,7 +85,7 @@ export default function SearchCell({
                                 <div className={styles.product_info_container}>
                                     <div className={styles.product_name_info_container}>
                                         <p className={styles.product_name_info}>
-                                            <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks
+                                            <FontAwesomeIcon icon={faHashtag} className={`${styles.icon}`} /> Indeks
                                             produktu
                                             <br />
                                             <span className={styles.product_name_info_base}>{product.Nr}</span>
@@ -102,7 +102,7 @@ export default function SearchCell({
                                     </div>
                                     <div className={styles.product_description_container}>
                                         <span>
-                                            <FontAwesomeIcon icon={faNewspaper} className={`${styles.icon}`} />{' '}
+                                            <FontAwesomeIcon icon={faClipboard} className={`${styles.icon}`} />{' '}
                                             {product['Opis 2']}
                                         </span>
                                     </div>

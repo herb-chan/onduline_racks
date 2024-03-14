@@ -1,7 +1,7 @@
 import styles from './options.module.css';
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBox, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faTable, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function Options({
@@ -12,6 +12,7 @@ export default function Options({
     setProductEAN,
     setSearchingProduct,
     setCellInfo,
+    setProductToAdd,
 }) {
     const onButtonClick = (buttonTitle) => {
         setActiveButton(buttonTitle);
@@ -20,6 +21,7 @@ export default function Options({
         setProductEAN('');
         setSearchingProduct('');
         setCellInfo('');
+        setProductToAdd('');
     };
 
     useEffect(() => {
@@ -71,7 +73,7 @@ export default function Options({
                 onClick={() => onButtonClick('Wyświetl')}>
                 <div className={`${styles.select_indicator} ${getWyświetlIndicatorClassName()}`}></div>
                 <div className={`${styles.options_button} ${getWyświetlClassName()}`}>
-                    <FontAwesomeIcon icon={faBox} className={styles.icon} />
+                    <FontAwesomeIcon icon={faTable} className={styles.icon} />
                     Wyświetl
                 </div>
                 <div></div>

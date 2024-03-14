@@ -30,6 +30,7 @@ function App() {
                 setProductEAN={setProductEAN}
                 setSearchingProduct={setSearchingProduct}
                 setCellInfo={setCellInfo}
+                setProductToAdd={setProductToAdd}
             />
             <div className="top_action">
                 <TopBar activeButton={activeButton} searchingProduct={searchingProduct} cellInfo={cellInfo} />

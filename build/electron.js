@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-// Define MongoDB URI
+const { autoUpdater, appUpdater } = require('electron-updater');
+
 const uri =
     'mongodb+srv://admin:HvD&a3&!Bkdv2nD@onduline-racks.kbynhhf.mongodb.net/?retryWrites=true&w=majority&appName=onduline-racks';
 
@@ -10,7 +11,73 @@ const searchShortcut = 'Alt+S';
 
 let mainWindow;
 
-// Create MongoDB client
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
+
+ipcMain.handle('fetchVersionInfo', async (event) => {
+    const appVersion = app.getVersion();
+    return appVersion;
+});
+
+autoUpdater.on('update-available', (info) => {
+    mainWindow.webContents.send('updateAvailable', info.version);
+    autoUpdater.downloadUpdate();
+});
+
+autoUpdater.on('update-not-available', (info) => {
+    mainWindow.webContents.send('updateNotAvailable', info.version);
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+    mainWindow.webContents.send(`updateDownloaded`);
+});
+
+autoUpdater.on('error', (info) => {
+    mainWindow.webContents.send(info);
+});
+
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        width: 1680,
+        height: 1050,
+        fullscreen: true, // Set fullscreen to true
+        icon: path.join(__dirname, 'favicon.ico'),
+        nodeIntegration: false,
+        contextIsolation: true,
+        enableRemoteModule: false,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
+    });
+    mainWindow.setMenuBarVisibility(false);
+    mainWindow.loadURL(`file://${__dirname}/../build/index.html`);
+    // mainWindow.loadURL(`http://localhost:3000`);
+}
+
+app.whenReady().then(() => {
+    createWindow();
+
+    app.on('activate', function () {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+
+    globalShortcut.register(viewShortcut, () => {
+        mainWindow.webContents.send('shortcutTriggered', 'viewShortcut');
+    });
+
+    globalShortcut.register(searchShortcut, () => {
+        mainWindow.webContents.send('shortcutTriggered', 'searchShortcut');
+    });
+
+    autoUpdater.checkForUpdates();
+});
+
+app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') app.quit();
+});
+
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -196,47 +263,6 @@ async function putProductOnShelf(validResult, cellSymbol) {
         throw error;
     }
 }
-
-function createWindow() {
-    mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        fullscreen: true, // Set fullscreen to true
-        icon: path.join(__dirname, 'favicon.ico'),
-        nodeIntegration: false,
-        contextIsolation: true,
-        enableRemoteModule: false,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true,
-            contextIsolation: false,
-        },
-    });
-    mainWindow.setMenuBarVisibility(false);
-    mainWindow.loadURL(`file://${__dirname}/../build/index.html`);
-}
-
-app.whenReady().then(() => {
-    createWindow();
-
-    app.on('activate', function () {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
-
-    globalShortcut.register(viewShortcut, () => {
-        // Send an IPC message to the renderer process
-        mainWindow.webContents.send('shortcutTriggered', 'viewShortcut');
-    });
-
-    globalShortcut.register(searchShortcut, () => {
-        // Send an IPC message to the renderer process
-        mainWindow.webContents.send('shortcutTriggered', 'searchShortcut');
-    });
-});
-
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') app.quit();
-});
 
 ipcMain.handle('fetchShelvesData', async (event) => {
     return await fetchShelvesData();

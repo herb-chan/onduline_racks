@@ -1,7 +1,7 @@
 import styles from './add.module.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTag, faQrcode, faNewspaper, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHashtag, faQrcode, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function AddProduct({
@@ -16,13 +16,13 @@ export default function AddProduct({
     const [validResult, setValidResult] = useState('');
 
     const productToAddInputChange = async (e) => {
-        setProductToAdd(e.target.value);
+        setProductToAdd(e.target.value.toUpperCase());
         setCommunicate('');
         setValidResult('');
     };
 
     const handleAdding = async () => {
-        if (productToAdd !== '' && productToAdd.length === 8) {
+        if (productToAdd !== '') {
             try {
                 const result = await ipcRenderer.invoke('searchByIndeks', productToAdd);
                 console.log('Search result:', result);
@@ -61,6 +61,12 @@ export default function AddProduct({
         }
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleAdding();
+        }
+    };
+
     return (
         <div className={styles.display_container}>
             <div className={`${styles.add_container}`}>
@@ -80,8 +86,8 @@ export default function AddProduct({
                         placeholder="Indeks..."
                         value={productToAdd}
                         onChange={productToAddInputChange}
-                        minLength={8}
-                        maxLength={8}
+                        minLength={0}
+                        onKeyDown={handleKeyPress} // Obsługa naciśnięcia klawisza Enter
                     />
                 </div>
                 <h3 className={`${styles.error_searching}`}>{communicate}</h3>
@@ -90,7 +96,7 @@ export default function AddProduct({
                         <div className={styles.product_info_container}>
                             <div className={styles.product_name_info_container}>
                                 <p className={styles.product_name_info}>
-                                    <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks produktu
+                                    <FontAwesomeIcon icon={faHashtag} className={`${styles.icon}`} /> Indeks produktu
                                     <br />
                                     <span className={styles.product_name_info_base}>{validResult[0]['Nr']}</span>
                                 </p>
@@ -106,7 +112,7 @@ export default function AddProduct({
                             </div>
                             <div className={styles.product_description_container}>
                                 <span>
-                                    <FontAwesomeIcon icon={faNewspaper} className={`${styles.icon}`} />{' '}
+                                    <FontAwesomeIcon icon={faClipboard} className={`${styles.icon}`} />{' '}
                                     {validResult[0]['Opis 2']}
                                 </span>
                             </div>

@@ -1,5 +1,7 @@
 import styles from './searchresult.module.css';
 import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function SearchResult({ searchingProduct, setCellInfo, setProductOnShelf }) {
@@ -51,7 +53,7 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
                 updatedCellColors[cell_symbol] = '#48b871'; // Set to green color
                 setRecentCell(product.Cell); // Set most recent product
             } else {
-                updatedCellColors[cell_symbol] = '#48b871'; // Default color
+                updatedCellColors[cell_symbol] = '#f3b255'; // Set to yellow color
             }
         });
 
@@ -61,51 +63,60 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
 
     return (
         <div className={`${styles.search_container}`}>
-            <table className={styles.rack}>
+            <div className={styles.rack}>
                 {[5, 4, 3, 2, 1].map((row) => (
-                    <tr key={row}>
+                    <div className={styles.rack_row} key={row}>
                         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'Ł', 'M'].map((col) => {
                             const cellSymbol = `${col}${row}`;
                             const hasProduct = cellCounts[cellSymbol] > 0;
                             return (
-                                <td
+                                <div
                                     key={col}
-                                    className={`${styles.cell} ${hasProduct ? styles.cell_with_product : ''}`}
+                                    className={`${styles.rack_cell} ${
+                                        hasProduct ? styles.rack_cell_with_product : ''
+                                    } ${styles[col]} ${styles[col + row]}`}
                                     onClick={
                                         hasProduct
                                             ? () => onCellWithProductClick(cellSymbol, searchingProduct[0]['Nr'])
                                             : undefined
                                     }>
-                                    <div className={styles.cell_inner}>
-                                        <div
-                                            className={styles.cell_symbol}
-                                            style={{ backgroundColor: cellColors[cellSymbol] || '' }}>
-                                            {col}
-                                            {row}
-                                        </div>
-                                        <div className={styles.cell_info}>
-                                            <span style={{ color: cellColors[cellSymbol] || '' }}>
-                                                {oldestCell === cellSymbol && recentCell !== cellSymbol && 'Najstarszy'}
-                                                {recentCell === cellSymbol && oldestCell !== cellSymbol && 'Najnowszy'}
-                                                {recentCell === cellSymbol && oldestCell === cellSymbol && (
-                                                    <span className={styles.when_both}>
-                                                        <span className={styles.recent}>Najnowszy</span>
-                                                        <span className={styles.blank}>oraz</span>
-                                                        <span className={styles.oldest}>Najstarszy</span>
-                                                    </span>
-                                                )}
-                                            </span>
-                                            {cellCounts[cellSymbol] && (
-                                                <span className={styles.counter}>Ilość: {cellCounts[cellSymbol]}</span>
-                                            )}
-                                        </div>
+                                    <div
+                                        className={styles.rack_cell_symbol}
+                                        style={{ backgroundColor: cellColors[cellSymbol] || '' }}>
+                                        {col}
+                                        {row}
                                     </div>
-                                </td>
+                                    <div className={styles.rack_cell_info}>
+                                        <span style={{ color: cellColors[cellSymbol] || '' }}>
+                                            {oldestCell === cellSymbol && recentCell !== cellSymbol && 'Najstarszy'}
+                                            {recentCell === cellSymbol && oldestCell !== cellSymbol && 'Najnowszy'}
+                                            {recentCell === cellSymbol && oldestCell === cellSymbol && (
+                                                <span className={styles.when_both}>
+                                                    <span className={styles.recent}>Najnowszy</span>
+                                                    <span className={styles.blank}>oraz</span>
+                                                    <span className={styles.oldest}>Najstarszy</span>
+                                                </span>
+                                            )}
+                                        </span>
+                                        {cellCounts[cellSymbol] && (
+                                            <span>
+                                                <FontAwesomeIcon
+                                                    icon={faBox}
+                                                    className={styles.box_icon}
+                                                    style={{
+                                                        color: cellColors[cellSymbol] || '',
+                                                    }}
+                                                />{' '}
+                                                Ilość: {cellCounts[cellSymbol]}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
                             );
                         })}
-                    </tr>
+                    </div>
                 ))}
-            </table>
+            </div>
         </div>
     );
 }

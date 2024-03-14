@@ -6,7 +6,6 @@ export default function Logo() {
     return (
         <div className={`${styles.logo_container}`}>
             <img src={racksLogo} alt="application logo" className={styles.racks_logo} />
-            <img src={ondulineLogo} alt="application logo" className={styles.onduline_logo} />
         </div>
     );
 }
