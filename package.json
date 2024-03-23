@@ -6,10 +6,11 @@
     "repository": "https://github.com/herb-chan/onduline_racks",
     "publish": {
         "provider": "github",
+        "private": true,
         "releaseType": "release",
         "owner": "herb-chan",
         "repo": "onduline_racks",
-        "githubToken": "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"
+        "token": "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"
     },
     "private": true,
     "homepage": "./",
