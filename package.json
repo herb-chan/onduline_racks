@@ -1,7 +1,7 @@
 {
     "name": "onduline_racks",
     "author": "Mikołaj Laskowski",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "description": "Pomocnik magazyniera Onduline.",
     "repository": "https://github.com/herb-chan/onduline_racks",
     "publish": {
@@ -10,7 +10,7 @@
         "releaseType": "release",
         "owner": "herb-chan",
         "repo": "onduline_racks",
-        "token": "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"
+        "token": "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"
     },
     "private": true,
     "homepage": "./",
@@ -78,7 +78,7 @@
         "appId": "com.Onduline.OndulineMagazynier",
         "productName": "Onduline Magazynier",
         "copyright": "Copyright @2024-2025 Mikołaj Laskowski",
-        "buildVersion": "1.4.5",
+        "buildVersion": "1.4.6",
         "files": [
             "build/**/*",
             "node_modules/**/*"
