@@ -1,0 +1,65 @@
+.selected_option {
+    border-radius: 0px 16px 16px 0px;
+    border: none;
+    outline: none;
+    background-color: #171717;
+    margin: 0px;
+    padding: 0px;
+    color: #ffffff;
+    font-weight: 700;
+    height: 100%;
+    font-size: 2.5vh;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    gap: 10px;
+    padding-inline: 10px;
+    transition: .25s;
+    width: 6vw;
+    justify-content: center;
+}
+
+.selected_option_open {
+    border-radius: 0px 16px 0px 0px;
+}
+
+.icon {
+    transition: 0.25s;
+}
+
+.icon_opened {
+    transform: rotate(90deg);
+    transition: .25s;
+}
+
+.custom_select {
+    position: relative;
+}
+
+.option_list {
+    position: absolute;
+    padding-block: 10px;
+    transition: .25s;
+    width: 100%;
+    background-color: #171717;
+    text-align: center;
+    font-size: 2vh;
+    border-radius: 0px 0px 16px 16px;
+}
+
+.option {
+    color: #4A4A4A;
+}
+
+.option:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.option_selected {
+    color: #fff;
+}
+
+.option:hover .option_selected {
+    color: #4A4A4A;
+}

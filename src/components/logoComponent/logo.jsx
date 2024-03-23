@@ -1,6 +1,5 @@
 import styles from './logo.module.css';
 import racksLogo from './racks_logo.png';
-import ondulineLogo from './onduline_logo.png';
 
 export default function Logo() {
     return (

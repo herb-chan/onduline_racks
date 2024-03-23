@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const { autoUpdater, appUpdater } = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 
 const uri =
     'mongodb+srv://admin:HvD&a3&!Bkdv2nD@onduline-racks.kbynhhf.mongodb.net/?retryWrites=true&w=majority&appName=onduline-racks';

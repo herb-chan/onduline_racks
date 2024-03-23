@@ -1,7 +1,7 @@
 import styles from './searchCell.module.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faClock, faQrcode, faHashtag, faClipboard, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faCalendarDay, faBarcode, faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function SearchCell({
@@ -86,13 +86,13 @@ export default function SearchCell({
                                 <div className={styles.product_info_container}>
                                     <div className={styles.product_name_info_container}>
                                         <p className={styles.product_name_info}>
-                                            <FontAwesomeIcon icon={faHashtag} className={`${styles.icon}`} /> Indeks
+                                            <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks
                                             produktu
                                             <br />
                                             <span className={styles.product_name_info_base}>{product.Nr}</span>
                                         </p>
                                         <p className={styles.product_name_info}>
-                                            <FontAwesomeIcon icon={faQrcode} className={`${styles.icon}`} /> Kod EAN13
+                                            <FontAwesomeIcon icon={faBarcode} className={`${styles.icon}`} /> Kod EAN13
                                             <br />
                                             <span className={styles.product_name_info_base}>
                                                 {product['Kod kreskowy jedn. podstaw.']
@@ -102,17 +102,14 @@ export default function SearchCell({
                                         </p>
                                     </div>
                                     <div className={styles.product_description_container}>
-                                        <span>
-                                            <FontAwesomeIcon icon={faClipboard} className={`${styles.icon}`} />{' '}
-                                            {product['Opis 2']}
-                                        </span>
+                                        <span>{product['Opis 2']}</span>
                                     </div>
                                 </div>
                                 <div
                                     className={`${styles.product_time_bar} ${
                                         youngestProduct && youngestProduct === product ? styles.youngest_product : ''
                                     } ${oldestProduct && oldestProduct === product ? styles.oldest_product : ''}`}>
-                                    <FontAwesomeIcon icon={faClock} /> {formattedDate}
+                                    <FontAwesomeIcon icon={faCalendarDay} /> {formattedDate}
                                 </div>
                             </div>
                             <div className={styles.product_edit_options}>

@@ -1,7 +1,7 @@
 import styles from './add.module.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faHashtag, faQrcode, faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTag, faBarcode, faCheck } from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function AddProduct({
@@ -87,21 +87,21 @@ export default function AddProduct({
                         value={productToAdd}
                         onChange={productToAddInputChange}
                         minLength={0}
-                        onKeyDown={handleKeyPress} // Obsługa naciśnięcia klawisza Enter
+                        onKeyDown={handleKeyPress}
                     />
                 </div>
-                <h3 className={`${styles.error_searching}`}>{communicate}</h3>
+                <h3 className={`${styles.communicate}`}>{communicate}</h3>
                 {validResult ? (
                     <div className={styles.container}>
                         <div className={styles.product_info_container}>
                             <div className={styles.product_name_info_container}>
                                 <p className={styles.product_name_info}>
-                                    <FontAwesomeIcon icon={faHashtag} className={`${styles.icon}`} /> Indeks produktu
+                                    <FontAwesomeIcon icon={faTag} className={`${styles.icon}`} /> Indeks produktu
                                     <br />
                                     <span className={styles.product_name_info_base}>{validResult[0]['Nr']}</span>
                                 </p>
                                 <p className={styles.product_name_info}>
-                                    <FontAwesomeIcon icon={faQrcode} className={`${styles.icon}`} /> Kod EAN13
+                                    <FontAwesomeIcon icon={faBarcode} className={`${styles.icon}`} /> Kod EAN13
                                     <br />
                                     <span className={styles.product_name_info_base}>
                                         {validResult[0]['Kod kreskowy jedn. podstaw.']
@@ -111,10 +111,7 @@ export default function AddProduct({
                                 </p>
                             </div>
                             <div className={styles.product_description_container}>
-                                <span>
-                                    <FontAwesomeIcon icon={faClipboard} className={`${styles.icon}`} />{' '}
-                                    {validResult[0]['Opis 2']}
-                                </span>
+                                <span>{validResult[0]['Opis 2']}</span>
                             </div>
                         </div>
                         <div className={styles.product_edit_options}>

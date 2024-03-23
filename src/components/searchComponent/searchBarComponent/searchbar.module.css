@@ -21,8 +21,8 @@
 
 .search_bar {
     border: none;
-    width: 800px;
-    height: 80px;
+    width: 40vw;
+    height: 8vh;
     font-size: 24px;
     font-weight: 700;
     color: #ffffff;
@@ -34,8 +34,8 @@
 }
 
 .icon_container {
-    width: 80px;
-    height: 80px;
+    width: 4.5vw;
+    height: 8vh;
     border-radius: 16px 0px 0px 16px;
     background-color: #171717;
     display: flex;
@@ -105,6 +105,21 @@ select option:hover {
     font-weight: 700;
 }
 
-.error_searching {
+.mistake {
+    color: #f3b255;
+}
+
+.error {
     color: #e16369;
+}
+
+h1,
+.search_bar,
+.search_bar::placeholder,
+.icon_container {
+    font-size: 2.5vh;
+}
+
+.communicate {
+    font-size: 1.5vh;
 }

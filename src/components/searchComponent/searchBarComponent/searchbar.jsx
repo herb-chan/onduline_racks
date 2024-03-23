@@ -1,6 +1,15 @@
 import styles from './searchbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {
+    faMagnifyingGlass,
+    faCircleExclamation,
+    faCircleXmark,
+    faTag,
+    faBarcode,
+    faClockRotateLeft,
+    faRuler,
+} from '@fortawesome/free-solid-svg-icons';
+import CustomSelect from '../customSelect/select';
 const { ipcRenderer } = window.require('electron');
 
 export default function SearchBar({
@@ -19,7 +28,7 @@ export default function SearchBar({
     setIsAddingButton,
     setIsAdding,
 }) {
-    const handleIndeksInputChange = (e) => {
+    const handleIndeksInputChange = async (e) => {
         setProductIndeks(e.target.value.toUpperCase());
         setSearchResult('');
         setCommunicate('');
@@ -27,24 +36,37 @@ export default function SearchBar({
         setIsAdding(false);
     };
 
-    const handleEANInputChange = (e) => {
-        setProductEAN(e.target.value);
+    const handleEANInputChange = async (e) => {
+        setProductEAN(e.target.value.toUpperCase());
         setSearchResult('');
         setCommunicate('');
         setIsAddingButton(false);
         setIsAdding(false);
     };
 
-    const handleSelectSearchMethodChange = (e) => {
-        setSelectedSearchMethod(e.target.value);
+    const handleSelectSearchMethodChange = async (e) => {
+        setSelectedSearchMethod(e);
         setCommunicate('');
         setProductIndeks('');
         setProductEAN('');
         setSearchResult('');
     };
 
+    const getCommunicateClassName = () => {
+        let className;
+        switch (searchResult) {
+            case 'mistake':
+                className = `${styles.mistake} ${styles.communicate}`;
+                break;
+            default:
+                className = `${styles.error} ${styles.communicate}`;
+                break;
+        }
+        return className;
+    };
+
     const handleSearchingIndeks = async () => {
-        if (selectedSearchMethod === 'indeks' && productIndeks !== '') {
+        if (selectedSearchMethod === 'Indeks' && productIndeks !== '') {
             setIsAdding(false);
             setIsAddingButton(false);
             try {
@@ -57,28 +79,45 @@ export default function SearchBar({
                     console.log('Product list:', productList);
                     setSearchingProduct(productList);
                 } else {
-                    // No product found on the rack
                     setCommunicate(
-                        `Błąd: Produkt "${productIndeks}" nie został znaleziony na regałach wysokiego składowania.`
+                        <>
+                            <FontAwesomeIcon icon={faCircleXmark} className={styles.icon} />{' '}
+                            {`Produkt '${productIndeks}' nie znajduje się na regale wysokiego składowania.`}
+                        </>
                     );
-                    setSearchResult('no_product_on_shelves');
+                    setSearchResult('mistake');
                 }
             } catch (error) {
                 console.error('Error searching by index:', error);
-                setCommunicate('Błąd: Wystąpił błąd podczas wyszukiwania.');
+                setCommunicate(
+                    <>
+                        <FontAwesomeIcon icon={faCircleExclamation} className={styles.icon} />{' '}
+                        {'Wystąpił błąd podczas wyszukiwania.'}
+                    </>
+                );
+                setSearchResult('error');
             }
-        } else if (selectedSearchMethod === 'indeks' && productIndeks === '') {
-            setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
-        } else if (selectedSearchMethod === 'indeks' && productIndeks.length !== 8) {
-            setCommunicate(`Błąd: Wprowadzony kod INDEKS jest krótszy niż wymagane 8 znaków.`);
-            setSearchResult('search_is_too_short');
+        } else if (selectedSearchMethod === 'Indeks' && productIndeks === '') {
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faCircleXmark} className={styles.icon} />{' '}
+                    {'Nie wprowadzono produktu, który ma zostać wyszukany.'}
+                </>
+            );
+            setSearchResult('mistake');
         } else {
-            setCommunicate(`Wyszukiwanie produktu "${productIndeks}" może zająć krótką chwilę...`);
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faClockRotateLeft} className={styles.icon} />{' '}
+                    {`Odnalezienie produktu '${productIndeks}' może zająć krótką chwilę...`}
+                </>
+            );
+            setSearchResult('mistake');
         }
     };
 
     const handleSearchingEAN = async () => {
-        if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === '' && productEAN.length === 13) {
+        if (selectedSearchMethod === 'EAN13' && productEAN !== '' && searchResult === '' && productEAN.length === 13) {
             setIsAdding(false);
             setIsAddingButton(false);
             try {
@@ -91,24 +130,48 @@ export default function SearchBar({
                     console.log('Product list:', productList);
                     setSearchingProduct(productList);
                 } else {
-                    // No product found in the database
-                    setCommunicate(`Błąd: Produkt "${productEAN}" nie został znaleziony w bazie.`);
-                    setSearchResult('no_product_in_database');
+                    setCommunicate(
+                        <>
+                            <FontAwesomeIcon icon={faCircleXmark} className={styles.icon} />{' '}
+                            {`Produkt '${productEAN}' nie znajduje się na regale wysokiego składowania.`}
+                        </>
+                    );
+                    setSearchResult('mistake');
                 }
             } catch (error) {
-                console.error('Error searching by EAN:', error);
-                setCommunicate('Błąd: Wystąpił błąd podczas wyszukiwania.');
+                console.error('Error searching by EAN13:', error);
+                setCommunicate(
+                    <>
+                        <FontAwesomeIcon icon={faCircleExclamation} className={styles.icon} />{' '}
+                        {'Wystąpił błąd podczas wyszukiwania.'}
+                    </>
+                );
+                setSearchResult('error');
             }
-        } else if (selectedSearchMethod === 'ean' && productEAN === '') {
-            setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać wyszukany.');
-        } else if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === 'no_product_in_database') {
-            setCommunicate(`Błąd: Produkt "${productEAN}" nie został znaleziony w bazie.`);
-        } else if (selectedSearchMethod === 'ean' && productEAN !== '' && searchResult === 'no_product_on_shelves') {
-            setCommunicate(`Produkt "${productEAN}" nie znajduje się na regałach wysokiego składowania.`);
-        } else if (selectedSearchMethod === 'ean' && productEAN !== '' && productEAN.length !== 13) {
-            setCommunicate(`Błąd: Wprowadzony kod EAN jest krótszy niż wymagane 13 znaków.`);
+        } else if (selectedSearchMethod === 'EAN13' && productEAN === '') {
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faCircleXmark} className={styles.icon} />{' '}
+                    {'Nie wprowadzono produktu, który ma zostać wyszukany.'}
+                </>
+            );
+            setSearchResult('mistake');
+        } else if (selectedSearchMethod === 'EAN13' && productEAN !== '' && productEAN.length !== 13) {
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faRuler} className={styles.icon} />{' '}
+                    {'Wprowadzony kod EAN13 jest krótszy niż wymagane 13 znaków.'}
+                </>
+            );
+            setSearchResult('mistake');
         } else {
-            setCommunicate(`Błąd: nie można wyszukać produktu "${productEAN}".`);
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faCircleExclamation} className={styles.icon} />{' '}
+                    {'Wystąpił błąd podczas wyszukiwania.'}
+                </>
+            );
+            setSearchResult('error');
         }
     };
 
@@ -128,7 +191,7 @@ export default function SearchBar({
         <div className={`${styles.search_container}`}>
             <div
                 className={`${styles.display_container} ${
-                    selectedSearchMethod === 'indeks' ? styles.display_indeks : ''
+                    selectedSearchMethod === 'Indeks' ? styles.display_indeks : ''
                 }`}>
                 <h1>Wyszukiwanie za pomocą indeksu:</h1>{' '}
                 <div className={`${styles.search_bar_container}`}>
@@ -150,17 +213,33 @@ export default function SearchBar({
                         minLength={0}
                         onKeyDown={handleIndeksKeyPress} // Obsługa naciśnięcia klawisza Enter
                     />
-                    <select
-                        className={`${styles.selected_search_option}`}
+                    <CustomSelect
+                        options={[
+                            {
+                                label: (
+                                    <span>
+                                        <FontAwesomeIcon icon={faTag} className={styles.icon} /> Indeks
+                                    </span>
+                                ),
+                                value: 'Indeks',
+                            },
+                            {
+                                label: (
+                                    <span>
+                                        <FontAwesomeIcon icon={faBarcode} className={styles.icon} /> EAN13
+                                    </span>
+                                ),
+                                value: 'EAN13',
+                            },
+                        ]}
                         value={selectedSearchMethod}
-                        onChange={handleSelectSearchMethodChange}>
-                        <option value={'indeks'}>Indeks</option>
-                        <option value={'ean'}>EAN13</option>
-                    </select>
+                        onChange={handleSelectSearchMethodChange}
+                    />
                 </div>
-                <h3 className={`${styles.error_searching}`}>{communicate}</h3>
+                <h3 className={getCommunicateClassName()}>{communicate}</h3>
             </div>
-            <div className={`${styles.display_container} ${selectedSearchMethod === 'ean' ? styles.display_ean : ''}`}>
+            <div
+                className={`${styles.display_container} ${selectedSearchMethod === 'EAN13' ? styles.display_ean : ''}`}>
                 <h1>Wyszukiwanie za pomocą kodu EAN13:</h1>{' '}
                 <div className={`${styles.search_bar_container}`}>
                     <div
@@ -182,15 +261,30 @@ export default function SearchBar({
                         maxLength={13}
                         onKeyDown={handleEANKeyPress} // Obsługa naciśnięcia klawisza Enter
                     />
-                    <select
-                        className={`${styles.selected_search_option}`}
+                    <CustomSelect
+                        options={[
+                            {
+                                label: (
+                                    <span>
+                                        <FontAwesomeIcon icon={faTag} className={styles.icon} /> Indeks
+                                    </span>
+                                ),
+                                value: 'Indeks',
+                            },
+                            {
+                                label: (
+                                    <span>
+                                        <FontAwesomeIcon icon={faBarcode} className={styles.icon} /> EAN13
+                                    </span>
+                                ),
+                                value: 'EAN13',
+                            },
+                        ]}
                         value={selectedSearchMethod}
-                        onChange={handleSelectSearchMethodChange}>
-                        <option value={'indeks'}>Indeks</option>
-                        <option value={'ean'}>EAN13</option>
-                    </select>
+                        onChange={handleSelectSearchMethodChange}
+                    />
                 </div>
-                <h3 className={`${styles.error_searching}`}>{communicate}</h3>
+                <h3 className={getCommunicateClassName()}>{communicate}</h3>
             </div>
         </div>
     );

@@ -28,7 +28,7 @@ export default function SearchAction({
     isAddingButton,
     setIsAddingButton,
 }) {
-    const [selectedSearchMethod, setSelectedSearchMethod] = useState('indeks');
+    const [selectedSearchMethod, setSelectedSearchMethod] = useState('Indeks');
 
     // Handle changes in productsOnShelf array
     // useEffect(() => {
