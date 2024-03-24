@@ -76,6 +76,8 @@ export default function ViewAction({
                                 onClick={() => {
                                     if (col !== 'K' && (row !== 1 || row !== 2)) {
                                         handleClickingOnShelf(`${col}${row}`);
+                                    } else if (col === 'K' && (row === 3 || row === 4 || row === 5)) {
+                                        handleClickingOnShelf(`${col}${row}`);
                                     }
                                 }}>
                                 <div

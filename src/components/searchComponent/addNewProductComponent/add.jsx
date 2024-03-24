@@ -1,7 +1,15 @@
 import styles from './add.module.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTag, faBarcode, faCheck } from '@fortawesome/free-solid-svg-icons';
+import {
+    faPlus,
+    faTag,
+    faBarcode,
+    faCheck,
+    faCircleXmark,
+    faCircleExclamation,
+    faClockRotateLeft,
+} from '@fortawesome/free-solid-svg-icons';
 const { ipcRenderer } = window.require('electron');
 
 export default function AddProduct({
@@ -14,6 +22,7 @@ export default function AddProduct({
     setProductOnShelf,
 }) {
     const [validResult, setValidResult] = useState('');
+    const [addResult, setAddResult] = useState('');
 
     const productToAddInputChange = async (e) => {
         setProductToAdd(e.target.value.toUpperCase());
@@ -31,18 +40,38 @@ export default function AddProduct({
                 if (result.length > 0) {
                     setValidResult(result);
                 } else {
-                    setCommunicate(`Błąd: Produkt "${productToAdd}" nie został znaleziony w bazie produktów.`);
+                    setCommunicate(
+                        <>
+                            <FontAwesomeIcon icon={faCircleXmark} />{' '}
+                            {`Produkt '${productToAdd}' nie znajduje się w bazie produktów.`}
+                        </>
+                    );
+                    setAddResult('mistake');
                 }
             } catch (error) {
                 console.error('Error searching by index:', error);
-                setCommunicate('Błąd: Wystąpił błąd podczas weryfikacji.');
+                setCommunicate(
+                    <>
+                        <FontAwesomeIcon icon={faCircleExclamation} /> {'Wystąpił błąd podczas weryfikacji.'}
+                    </>
+                );
+                setAddResult('error');
             }
         } else if (productToAdd === '') {
-            setCommunicate('Błąd: Nie wprowadzono produktu, który ma zostać dodany.');
-        } else if (productToAdd.length !== 8) {
-            setCommunicate(`Błąd: Wprowadzony kod INDEKS jest krótszy niż wymagane 8 znaków.`);
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faCircleXmark} /> {'Nie wprowadzono produktu, który ma zostać dodany.'}
+                </>
+            );
+            setAddResult('mistake');
         } else {
-            setCommunicate(`Zweryfikowanie produktu "${productToAdd}" może zająć krótką chwilę...`);
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faClockRotateLeft} />{' '}
+                    {`Zweryfikowanie produktu '${productToAdd}' może zająć krótką chwilę...`}
+                </>
+            );
+            setAddResult('mistake');
         }
     };
 
@@ -57,7 +86,12 @@ export default function AddProduct({
             }
         } catch (error) {
             console.error('Error adding product to shelf:', error);
-            setCommunicate('Błąd: Wystąpił błąd podczas dodawania produktu.');
+            setCommunicate(
+                <>
+                    <FontAwesomeIcon icon={faCircleExclamation} /> {'Wystąpił błąd podczas dodawania produktu.'}
+                </>
+            );
+            setAddResult('error');
         }
     };
 
@@ -65,6 +99,19 @@ export default function AddProduct({
         if (e.key === 'Enter') {
             handleAdding();
         }
+    };
+
+    const getCommunicateClassName = () => {
+        let className;
+        switch (addResult) {
+            case 'mistake':
+                className = `${styles.mistake} ${styles.communicate}`;
+                break;
+            default:
+                className = `${styles.error} ${styles.communicate}`;
+                break;
+        }
+        return className;
     };
 
     return (
@@ -90,7 +137,7 @@ export default function AddProduct({
                         onKeyDown={handleKeyPress}
                     />
                 </div>
-                <h3 className={`${styles.communicate}`}>{communicate}</h3>
+                <h3 className={getCommunicateClassName()}>{communicate}</h3>
                 {validResult ? (
                     <div className={styles.container}>
                         <div className={styles.product_info_container}>

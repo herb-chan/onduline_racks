@@ -160,3 +160,11 @@ h1,
 .communicate {
     font-size: 1.5vh;
 }
+
+.mistake {
+    color: #f3b255;
+}
+
+.error {
+    color: #e16369;
+}

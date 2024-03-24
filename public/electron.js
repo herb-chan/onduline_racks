@@ -52,8 +52,8 @@ function createWindow() {
         },
     });
     mainWindow.setMenuBarVisibility(false);
-    mainWindow.loadURL(`file://${__dirname}/../build/index.html`);
-    // mainWindow.loadURL(`http://localhost:3000`);
+    // mainWindow.loadURL(`file://${__dirname}/../build/index.html`);
+    mainWindow.loadURL(`http://localhost:3000`);
 }
 
 app.whenReady().then(() => {
