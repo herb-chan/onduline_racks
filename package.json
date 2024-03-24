@@ -1,7 +1,7 @@
 {
     "name": "onduline_racks",
     "author": "Mikołaj Laskowski",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "description": "Pomocnik magazyniera Onduline.",
     "repository": "https://github.com/herb-chan/onduline_racks",
     "publish": {
@@ -73,7 +73,7 @@
         "appId": "com.Onduline.OndulineMagazynier",
         "productName": "Onduline Magazynier",
         "copyright": "Copyright @2024-2025 Mikołaj Laskowski",
-        "buildVersion": "1.5.1",
+        "buildVersion": "1.5.2",
         "files": [
             "build/**/*",
             "node_modules/**/*"
