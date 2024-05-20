@@ -47,13 +47,13 @@ export default function SearchResult({ searchingProduct, setCellInfo, setProduct
 
             const productDate = new Date(product.Date);
             if (productDate.getTime() === oldestDate.getTime()) {
-                updatedCellColors[cell_symbol] = '#e16369'; // Set to red color
+                updatedCellColors[cell_symbol] = '#ff6b81'; // Set to red color
                 setOldestCell(product.Cell); // Set oldest product
             } else if (productDate.getTime() === mostRecentDate.getTime()) {
-                updatedCellColors[cell_symbol] = '#48b871'; // Set to green color
+                updatedCellColors[cell_symbol] = '#7bed9f'; // Set to green color
                 setRecentCell(product.Cell); // Set most recent product
             } else {
-                updatedCellColors[cell_symbol] = '#f3b255'; // Set to yellow color
+                updatedCellColors[cell_symbol] = '#eccc68'; // Set to yellow color
             }
         });
 

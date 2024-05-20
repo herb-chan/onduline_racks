@@ -24,35 +24,35 @@
 }
 
 .wyświetl_indicator_active {
-    background-color: #f3b255;
+    background-color: #eccc68;
 }
 
 .wyszukaj_indicator_active {
-    background-color: #7887d9;
+    background-color: #70a1ff;
 }
 
 .indicator_inactive {
-    background-color: #171717;
+    background-color: #dfe4ea;
 }
 
 .wyświetl_active {
-    color: #f3b255;
+    color: #eccc68;
 }
 
 .wyszukaj_active {
-    color: #7887d9;
+    color: #70a1ff;
 }
 
 .text_inactive {
-    color: #4A4A4A;
+    color: #dfe4ea;
 }
 
 .hoverable:hover .text_inactive {
-    color: #7a7a7a;
+    color: #f1f2f6;
 }
 
 .options_button {
-    background-color: #171717;
+    background-color: #fff;
     border: none;
     font-size: 1.4vw;
     font-weight: 700;

@@ -6,29 +6,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #1E1E1E;
+    background-color: #ffffff;
     overflow-x: auto;
     overflow-y: hidden;
-}
-
-.view_container::-webkit-scrollbar {
-    width: 20px;
-}
-
-.view_container::-webkit-scrollbar-track {
-    background: #171717;
-}
-
-.view_container::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-}
-
-.view_container::-webkit-scrollbar-thumb:hover {
-    background: #7a7a7a;
-}
-
-.view_container::-webkit-scrollbar-corner {
-    background-color: #1E1E1E;
+    color: #a4b0be;
 }
 
 div {
@@ -55,7 +36,7 @@ div {
     display: flex;
     flex-direction: column;
     text-align: center;
-    border: white solid;
+    border: #f1f2f6 solid;
     border-bottom: none;
     border-right: 0;
     padding: 0;
@@ -83,7 +64,7 @@ div {
 }
 
 .rack_cell_clickable:hover {
-    background-color: #4A4A4A;
+    background-color: #f1f2f6;
 }
 
 @keyframes spin {
@@ -105,10 +86,10 @@ div {
 }
 
 .K2 {
-    color: #1E1E1E;
+    color: #fff;
 }
 
 .K1 {
     border-top: 0;
-    color: #1E1E1E;
+    color: #fff;
 }

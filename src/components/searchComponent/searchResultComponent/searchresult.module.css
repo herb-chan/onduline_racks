@@ -5,29 +5,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #1E1E1E;
+    background-color: #fff;
     overflow-x: auto;
     overflow-y: hidden;
-}
-
-.search_container::-webkit-scrollbar {
-    width: 20px;
-}
-
-.search_container::-webkit-scrollbar-track {
-    background: #171717;
-}
-
-.search_container::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-}
-
-.search_container::-webkit-scrollbar-thumb:hover {
-    background: #7a7a7a;
-}
-
-.search_container::-webkit-scrollbar-corner {
-    background-color: #1E1E1E;
+    color: #a4b0be;
 }
 
 .rack {
@@ -35,24 +16,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-}
-
-td {
-    text-align: center;
-    border: white solid;
-    border-bottom: 0px;
-}
-
-table,
-tr,
-td,
-th {
-    border-collapse: collapse;
-}
-
-span {
-    margin: 0;
-    padding: 0;
 }
 
 .recent {
@@ -77,7 +40,7 @@ span {
 }
 
 .rack_cell_with_product:hover {
-    background-color: #4A4A4A;
+    background-color: #f1f2f6;
 }
 
 .view_container {
@@ -117,14 +80,6 @@ div {
     border-collapse: collapse;
 }
 
-.rack {
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 .rack_row {
     display: flex;
     flex-direction: row;
@@ -137,7 +92,7 @@ div {
     display: flex;
     flex-direction: column;
     text-align: center;
-    border: white solid;
+    border: #f1f2f6 solid;
     border-bottom: none;
     border-right: 0;
     padding: 0;
@@ -165,7 +120,7 @@ div {
 }
 
 .rack_cell_clickable:hover {
-    background-color: #4A4A4A;
+    background-color: #f1f2f6;
 }
 
 @keyframes spin {
@@ -187,10 +142,10 @@ div {
 }
 
 .K2 {
-    color: #1E1E1E;
+    color: #fff;
 }
 
 .K1 {
     border-top: 0;
-    color: #1E1E1E;
+    color: #fff;
 }

@@ -5,7 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #1E1E1E;
+    background-color: #fff;
+    color: #a4b0be;
 }
 
 .add_container {
@@ -24,8 +25,8 @@
     height: 8vh;
     font-size: 24px;
     font-weight: 700;
-    color: #ffffff;
-    background-color: #171717;
+    color: #a4b0be;
+    background-color: #f1f2f6;
     border-radius: 0px 16px 16px 0px;
     margin: 0px;
     padding: 0px;
@@ -37,16 +38,16 @@
     width: 4.5vw;
     height: 8vh;
     border-radius: 16px 0px 0px 16px;
-    background-color: #171717;
+    background-color: #f1f2f6;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 28px;
-    color: #4A4A4A;
+    color: #a4b0be;
 }
 
 .icon_active {
-    background-color: #7887d9;
+    background-color: #70a1ff;
     color: #ffffff;
     cursor: pointer;
 }
@@ -79,13 +80,13 @@
 }
 
 .error_searching {
-    color: #e16369;
+    color: #ff6b81;
 }
 
 .product_info_container {
     width: 100%;
     height: 10vh;
-    background-color: #171717;
+    background-color: #f1f2f6;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -100,7 +101,7 @@
 }
 
 .product_description_container {
-    color: #4A4A4A;
+    color: #dfe4ea;
 }
 
 .product_name_info {
@@ -108,11 +109,11 @@
 }
 
 .product_name_info_base {
-    color: #4A4A4A;
+    color: #dfe4ea;
 }
 
 .icon {
-    color: #4A4A4A;
+    color: #a4b0be;
 }
 
 .container {
@@ -129,7 +130,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #171717;
+    background-color: #f1f2f6;
     border-radius: 16px;
     transition: 0.25s;
     cursor: pointer;
@@ -138,7 +139,7 @@
 }
 
 .add_icon {
-    color: #4A4A4A;
+    color: #a4b0be;
     transition: 0.25s;
 }
 
@@ -147,7 +148,7 @@
 }
 
 .icon_container_add:hover .add_icon {
-    color: #48b871;
+    color: #7bed9f;
 }
 
 h1,
@@ -162,9 +163,14 @@ h1,
 }
 
 .mistake {
-    color: #f3b255;
+    color: #eccc68;
 }
 
 .error {
-    color: #e16369;
+    color: #ff6b81;
+}
+
+.search_bar::placeholder {
+    color: #dfe4ea;
+    font-weight: 700;
 }

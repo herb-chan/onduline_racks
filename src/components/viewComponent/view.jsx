@@ -87,11 +87,11 @@ export default function ViewAction({
                                             cellProductsCount[`${col}${row}`] === 0
                                                 ? ''
                                                 : cellProductsCount[`${col}${row}`] === 1
-                                                ? '#48b871'
+                                                ? '#7bed9f'
                                                 : cellProductsCount[`${col}${row}`] === 2
-                                                ? '#f3b255'
+                                                ? '#eccc68'
                                                 : cellProductsCount[`${col}${row}`] >= 3
-                                                ? '#e16369'
+                                                ? '#ff6b81'
                                                 : '',
                                     }}>
                                     {col}
@@ -114,11 +114,11 @@ export default function ViewAction({
                                                             cellProductsCount[`${col}${row}`] === 0
                                                                 ? ''
                                                                 : cellProductsCount[`${col}${row}`] === 1
-                                                                ? '#48b871'
+                                                                ? '#7bed9f'
                                                                 : cellProductsCount[`${col}${row}`] === 2
-                                                                ? '#f3b255'
+                                                                ? '#eccc68'
                                                                 : cellProductsCount[`${col}${row}`] >= 3
-                                                                ? '#e16369'
+                                                                ? '#ff6b81'
                                                                 : '',
                                                     }}
                                                 />{' '}

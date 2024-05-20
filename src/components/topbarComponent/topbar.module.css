@@ -4,15 +4,16 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: #171717;
+    background-color: #fff;
     height: 15%;
     min-height: 15%;
+    color: #a4b0be;
 }
 
 .wyświetl {
-    color: #f3b255;
+    color: #eccc68;
 }
 
 .wyszukaj {
-    color: #7887d9;
+    color: #70a1ff;
 }

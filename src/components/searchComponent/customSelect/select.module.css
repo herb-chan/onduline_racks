@@ -2,10 +2,10 @@
     border-radius: 0px 16px 16px 0px;
     border: none;
     outline: none;
-    background-color: #171717;
+    background-color: #f1f2f6;
     margin: 0px;
     padding: 0px;
-    color: #ffffff;
+    color: #a4b0be;
     font-weight: 700;
     height: 100%;
     font-size: 2.5vh;
@@ -41,25 +41,25 @@
     padding-block: 10px;
     transition: .25s;
     width: 100%;
-    background-color: #171717;
+    background-color: #f1f2f6;
     text-align: center;
     font-size: 2vh;
     border-radius: 0px 0px 16px 16px;
 }
 
 .option {
-    color: #4A4A4A;
+    color: #dfe4ea;
 }
 
 .option:hover {
-    color: #fff;
+    color: #ced6e0;
     cursor: pointer;
 }
 
 .option_selected {
-    color: #fff;
+    color: #ced6e0;
 }
 
 .option:hover .option_selected {
-    color: #4A4A4A;
+    color: #dfe4ea;
 }

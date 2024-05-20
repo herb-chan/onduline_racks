@@ -5,7 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #1E1E1E;
+    background-color: #fff;
+    color: #a4b0be;
 }
 
 .display_container {
@@ -25,8 +26,8 @@
     height: 8vh;
     font-size: 24px;
     font-weight: 700;
-    color: #ffffff;
-    background-color: #171717;
+    color: #a4b0be;
+    background-color: #f1f2f6;
     margin: 0px;
     padding: 0px;
     outline: none;
@@ -37,16 +38,16 @@
     width: 4.5vw;
     height: 8vh;
     border-radius: 16px 0px 0px 16px;
-    background-color: #171717;
+    background-color: #f1f2f6;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 28px;
-    color: #4A4A4A;
+    color: #a4b0be;
 }
 
 .icon_active {
-    background-color: #7887d9;
+    background-color: #70a1ff;
     color: #ffffff;
     cursor: pointer;
 }
@@ -74,23 +75,6 @@
     }
 }
 
-.selected_search_option {
-    border-radius: 0px 16px 16px 0px;
-    border: none;
-    outline: none;
-    background-color: #171717;
-    margin: 0px;
-    padding: 0px;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 24px;
-}
-
-select option:hover {
-    background-color: red;
-    /* Change to your desired highlight color */
-}
-
 .icon_shake {
     animation: shake 1s infinite;
 }
@@ -101,16 +85,16 @@ select option:hover {
 }
 
 .search_bar::placeholder {
-    color: #4A4A4A;
+    color: #dfe4ea;
     font-weight: 700;
 }
 
 .mistake {
-    color: #f3b255;
+    color: #eccc68;
 }
 
 .error {
-    color: #e16369;
+    color: #ff6b81;
 }
 
 h1,
